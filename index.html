@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nomadikas — Architecture-Led Villa Rentals & Retreat Venues</title>
+<meta name="description" content="Seven architecture-led estates across Bali, Portugal, Costa Rica and Greece. Curated by Darina Angelow for private weeks, hosted retreats and corporate buyouts."/>
+<link rel="canonical" href="https://nomadikas.com/"/>
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Nomadikas"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:title" content="Nomadikas — Architecture-led villa rentals and retreat venues"/>
+<meta property="og:description" content="Seven estates across Bali, Portugal, Costa Rica and Greece. Curated one property at a time."/>
+<meta property="og:url" content="https://nomadikas.com/"/>
+<meta property="og:image" content="https://nomadikas.com/wp-content/uploads/2021/01/DJI_0182-scaled.jpg"/>
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Nomadikas — Architecture-led villa rentals and retreat venues"/>
+<meta name="twitter:description" content="Seven estates across Bali, Portugal, Costa Rica and Greece."/>
+<meta name="twitter:image" content="https://nomadikas.com/wp-content/uploads/2021/01/DJI_0182-scaled.jpg"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+    --primary: #1a1a1a;
+    --primary-soft: #2a2828;
+    --accent: #c9a87c;
+    --accent-soft: #ddc1a0;
+    --accent-deep: #a68758;
+    --cream: #faf8f3;
+    --cream-warm: #f3ede0;
+    --cream-deep: #ebe3d1;
+    --text: #2a2727;
+    --text-mute: #6b6661;
+    --text-whisper: #a09a92;
+    --border: rgba(26, 26, 26, 0.08);
+    --border-strong: rgba(26, 26, 26, 0.14);
+    --shadow-soft: 0 4px 40px rgba(26, 26, 26, 0.06);
+    --shadow-lift: 0 20px 80px rgba(26, 26, 26, 0.12);
+    --shadow-heavy: 0 30px 120px rgba(26, 26, 26, 0.18);
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-dramatic: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════════════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+.serif { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; }
+.serif-italic { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 400; }
+.label {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-mute);
+}
+.label-accent { color: var(--accent); }
+.label-light { color: rgba(250, 248, 243, 0.75); }
+
+h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    color: var(--primary);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1320px; margin: 0 auto; padding: 0 2.5rem; }
+@media (max-width: 768px) { .container { padding: 0 1.25rem; } }
+
+.divider-gold { width: 2rem; height: 1px; background: var(--accent); margin: 2rem auto; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   NAVIGATION — sticky, transparent over hero, solid elsewhere
+   ═══════════════════════════════════════════════════════════════════ */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 1.5rem 2.5rem;
+    transition: all 0.4s var(--ease);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+}
+.nav.solid {
+    background: rgba(250, 248, 243, 0.96);
+    backdrop-filter: blur(20px);
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.nav-left { display: flex; gap: 2.5rem; align-items: center; }
+.nav-right { display: flex; gap: 2.5rem; align-items: center; justify-content: flex-end; }
+.nav-brand {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--cream);
+    transition: color 0.4s var(--ease);
+    white-space: nowrap;
+}
+.nav.solid .nav-brand { color: var(--primary); }
+.nav-link {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--cream);
+    opacity: 0.9;
+    transition: all 0.3s var(--ease);
+    white-space: nowrap;
+}
+.nav.solid .nav-link { color: var(--primary); opacity: 0.75; }
+.nav-link:hover { opacity: 1; color: var(--accent); }
+.nav-cta {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--cream);
+    border: 1px solid rgba(250, 248, 243, 0.5);
+    padding: 0.7rem 1.4rem;
+    transition: all 0.3s var(--ease);
+}
+.nav.solid .nav-cta { color: var(--primary); border-color: var(--primary); }
+.nav-cta:hover { background: var(--accent); border-color: var(--accent); color: var(--cream); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+.nav-toggle span { display: block; width: 28px; height: 1px; background: var(--cream); margin: 6px 0; transition: all 0.3s var(--ease); }
+.nav.solid .nav-toggle span { background: var(--primary); }
+
+@media (max-width: 900px) {
+    .nav { padding: 1rem 1.25rem; grid-template-columns: 1fr auto 1fr; }
+    .nav-left, .nav-right { display: none; }
+    .nav-toggle { display: block; position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); }
+    .nav-right-cta-mobile { display: block; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO — fullscreen, kinetic typography, slow Ken Burns
+   ═══════════════════════════════════════════════════════════════════ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 2.5rem 5rem;
+    color: var(--cream);
+    overflow: hidden;
+}
+.hero-bg {
+    position: absolute; inset: 0; z-index: -2;
+    background-size: cover; background-position: center;
+    transform: scale(1.08);
+    animation: kenBurns 22s var(--ease) infinite alternate;
+}
+.hero-bg-img-1 { background-image: url('https://nomadikas.com/wp-content/uploads/2021/01/DJI_0182-scaled.jpg'); }
+.hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.65) 100%);
+}
+@keyframes kenBurns {
+    0% { transform: scale(1.08) translate(0, 0); }
+    100% { transform: scale(1.15) translate(-2%, -1%); }
+}
+.hero-content { max-width: 1280px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+.hero-supertitle {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent-soft);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeInUp 1.4s var(--ease-out) 0.3s forwards;
+}
+.hero-supertitle .dot { margin: 0 0.8rem; opacity: 0.5; }
+.hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(3rem, 8.5vw, 7rem);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    max-width: 16ch;
+    color: var(--cream);
+    margin-bottom: 2.5rem;
+    min-height: clamp(6rem, 17vw, 14rem);
+    position: relative;
+}
+.hero-headline .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s var(--ease-out);
+}
+.hero-headline .line.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-headline .accent {
+    font-style: italic;
+    color: var(--accent-soft);
+    position: relative;
+}
+.hero-headline .accent::after {
+    content: '';
+    position: absolute;
+    bottom: 0.12em; left: 0;
+    width: 100%; height: 2px;
+    background: var(--accent-soft);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: drawLine 2s var(--ease-out) 1.5s forwards;
+}
+@keyframes drawLine {
+    to { transform: scaleX(1); }
+}
+.hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    line-height: 1.5;
+    max-width: 48ch;
+    color: rgba(250, 248, 243, 0.85);
+    opacity: 0;
+    animation: fadeInUp 1.4s var(--ease-out) 0.9s forwards;
+    font-style: italic;
+    font-weight: 300;
+}
+.hero-cta-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeInUp 1.4s var(--ease-out) 1.2s forwards;
+    flex-wrap: wrap;
+}
+.btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 1.1rem 1.8rem;
+    border: 1px solid rgba(250, 248, 243, 0.5);
+    color: var(--cream);
+    transition: all 0.4s var(--ease);
+    cursor: pointer;
+}
+.btn-hero:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+.btn-hero.filled { background: var(--cream); color: var(--primary); border-color: var(--cream); }
+.btn-hero.filled:hover { background: var(--accent); border-color: var(--accent); color: var(--cream); }
+.btn-hero svg { width: 14px; height: 14px; transition: transform 0.3s var(--ease); }
+.btn-hero:hover svg { transform: translateX(4px); }
+
+.hero-scroll-cue {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(250, 248, 243, 0.7);
+    z-index: 2;
+}
+.hero-scroll-cue .label-scroll {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+.hero-scroll-cue .line {
+    width: 1px; height: 3rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 100%);
+    animation: scroll-cue 2.4s var(--ease) infinite;
+    transform-origin: top;
+}
+@keyframes scroll-cue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INTRO — Darina's voice, italic, quiet
+   ═══════════════════════════════════════════════════════════════════ */
+.intro { padding: 10rem 0 6rem; text-align: center; }
+.intro .label { color: var(--accent); margin-bottom: 2rem; }
+.intro-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    line-height: 1.45;
+    max-width: 34ch;
+    margin: 0 auto;
+    color: var(--primary);
+    font-weight: 300;
+    font-style: italic;
+}
+.intro-quote em {
+    font-style: italic;
+    color: var(--accent-deep);
+}
+.intro-byline {
+    margin-top: 2.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--text-mute);
+}
+.intro-byline .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--accent-deep);
+    margin: 0 0.4rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   THREE DOORS — audience selector
+   ═══════════════════════════════════════════════════════════════════ */
+.doors { padding: 6rem 0 10rem; }
+.doors-header { text-align: center; margin-bottom: 5rem; }
+.doors-header .label { color: var(--accent); margin-bottom: 1.5rem; }
+.doors-header h2 {
+    font-size: clamp(2.3rem, 4.5vw, 3.5rem);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 22ch;
+    margin: 0 auto 1.5rem;
+}
+.doors-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--text-mute);
+    max-width: 50ch;
+    margin: 0 auto;
+    font-style: italic;
+    line-height: 1.6;
+}
+.doors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+@media (max-width: 900px) { .doors-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+.door {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--primary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem;
+    color: var(--cream);
+    transition: all 0.5s var(--ease-out);
+}
+.door::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 1.6s var(--ease-out);
+    z-index: 0;
+}
+.door::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.8) 100%);
+    transition: background 0.5s var(--ease);
+    z-index: 1;
+}
+.door:hover::before { transform: scale(1.08); }
+.door:hover::after { background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 50%, rgba(180,130,60,0.7) 100%); }
+.door:nth-child(1)::before { background-image: url('https://nomadikas.com/wp-content/uploads/2023/07/31.jpg'); }
+.door:nth-child(2)::before { background-image: url('https://nomadikas.com/wp-content/uploads/2024/07/Wild-Luxury-Retreats-Rentlas.jpg'); }
+.door:nth-child(3)::before { background-image: url('https://nomadikas.com/wp-content/uploads/2023/07/38.jpg'); }
+.door-content { position: relative; z-index: 2; }
+.door .number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--accent-soft);
+    margin-bottom: 1.5rem;
+}
+.door h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 0.8rem;
+}
+.door .door-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: rgba(250, 248, 243, 0.85);
+    font-style: italic;
+    max-width: 24ch;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+.door .door-cta {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--cream);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(250, 248, 243, 0.2);
+    transition: border-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+.door:hover .door-cta { color: var(--accent-soft); border-top-color: rgba(250, 248, 243, 0.5); }
+.door .door-cta svg { width: 12px; height: 12px; transition: transform 0.3s var(--ease); }
+.door:hover .door-cta svg { transform: translateX(4px); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   ESTATES — horizontal scroll carousel
+   ═══════════════════════════════════════════════════════════════════ */
+.estates-section {
+    padding: 10rem 0 6rem;
+    background: var(--cream-warm);
+    position: relative;
+    overflow: hidden;
+}
+.estates-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 2.5rem;
+    margin-bottom: 4rem;
+    max-width: 1280px;
+    margin-left: auto; margin-right: auto;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+.estates-header .label { color: var(--accent); margin-bottom: 1rem; }
+.estates-header h2 {
+    font-size: clamp(2.3rem, 4.5vw, 3.5rem);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 18ch;
+}
+.estates-header-right { max-width: 34ch; }
+.estates-header-right p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--text-mute);
+    font-style: italic;
+    line-height: 1.6;
+}
+.estates-scroll-wrap {
+    position: relative;
+    padding: 0 2.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.estates-scroll {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 2.5rem;
+    padding-bottom: 3rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.estates-scroll::-webkit-scrollbar { display: none; }
+.estate-card {
+    flex: 0 0 clamp(300px, 32vw, 440px);
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: transform 0.6s var(--ease-out);
+}
+.estate-card-img {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--cream-deep);
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+.estate-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.6s var(--ease-out);
+}
+.estate-card:hover .estate-card-img img { transform: scale(1.06); }
+.estate-card-num {
+    position: absolute;
+    top: 1.25rem; left: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    font-style: italic;
+    opacity: 0.9;
+    mix-blend-mode: difference;
+}
+.estate-card-location {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.66rem;
+    color: var(--accent-deep);
+    margin-bottom: 0.7rem;
+}
+.estate-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--primary);
+    margin-bottom: 0.4rem;
+    line-height: 1.1;
+}
+.estate-card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--text-mute);
+    line-height: 1.5;
+    font-style: italic;
+    margin-bottom: 1.2rem;
+    max-width: 28ch;
+}
+.estate-card-spec {
+    display: flex;
+    gap: 1.4rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    color: var(--text-mute);
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+}
+.estates-nav {
+    display: flex; gap: 0.6rem; justify-content: flex-end;
+    margin-top: 1rem;
+    padding: 0 2.5rem;
+    max-width: 1280px;
+    margin-left: auto; margin-right: auto;
+}
+.estates-nav button {
+    width: 52px; height: 52px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+.estates-nav button:hover { background: var(--primary); color: var(--cream); border-color: var(--primary); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOUNDER CUT — Darina, E-E-A-T anchor
+   ═══════════════════════════════════════════════════════════════════ */
+.founder { padding: 10rem 0; }
+.founder-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+@media (max-width: 900px) { .founder-grid { grid-template-columns: 1fr; gap: 3rem; } }
+.founder-img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--cream-warm);
+}
+.founder-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 2s var(--ease-out);
+}
+.founder-img-wrap:hover img { transform: scale(1.04); }
+.founder-img-caption {
+    position: absolute;
+    bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    color: var(--cream);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    display: flex; align-items: center; gap: 0.7rem;
+}
+.founder-img-caption::before {
+    content: '';
+    width: 1.2rem; height: 1px;
+    background: var(--cream);
+    flex-shrink: 0;
+}
+.founder-content .label { color: var(--accent); margin-bottom: 1.5rem; }
+.founder-content h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    max-width: 20ch;
+}
+.founder-content h2 em { color: var(--accent-deep); font-style: italic; }
+.founder-content p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    max-width: 48ch;
+}
+.founder-content p.attribution {
+    margin-top: 2.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--text-mute);
+    font-style: normal;
+    line-height: 1.8;
+}
+.founder-content .signature {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin: 1rem 0 1.5rem;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+}
+.founder-credentials {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+.founder-credentials .credential {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    color: var(--text-mute);
+}
+.founder-credentials .credential strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--primary);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 0.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   COUNTER-POSITIONING — "What you won't find"
+   ═══════════════════════════════════════════════════════════════════ */
+.counter {
+    padding: 8rem 0;
+    background: var(--primary);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+}
+.counter::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201, 168, 124, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+}
+.counter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+@media (max-width: 900px) { .counter-grid { grid-template-columns: 1fr; gap: 3rem; } }
+.counter-left .label { color: var(--accent-soft); margin-bottom: 1.5rem; }
+.counter-left h2 {
+    font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+    color: var(--cream);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.1;
+    max-width: 16ch;
+    margin-bottom: 2rem;
+}
+.counter-left h2 em { color: var(--accent-soft); }
+.counter-left p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: rgba(250, 248, 243, 0.75);
+    line-height: 1.65;
+    font-style: italic;
+    max-width: 40ch;
+}
+.counter-list {
+    list-style: none;
+    padding: 0; margin: 0;
+}
+.counter-list li {
+    padding: 1.2rem 0;
+    border-top: 1px solid rgba(250, 248, 243, 0.15);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: rgba(250, 248, 243, 0.85);
+    display: flex; align-items: baseline; gap: 1rem;
+    font-style: italic;
+    font-weight: 300;
+}
+.counter-list li:last-child { border-bottom: 1px solid rgba(250, 248, 243, 0.15); }
+.counter-list .x {
+    color: var(--accent-soft);
+    font-size: 1.3rem;
+    font-style: normal;
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PRESS — trust framing
+   ═══════════════════════════════════════════════════════════════════ */
+.press {
+    padding: 6rem 0;
+    background: var(--cream);
+    text-align: center;
+}
+.press .label { color: var(--accent); margin-bottom: 2.5rem; }
+.press-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3.5rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    opacity: 0.75;
+    transition: opacity 0.4s var(--ease);
+}
+.press-logos:hover { opacity: 1; }
+.press-logos img {
+    height: 36px;
+    width: auto;
+    filter: grayscale(1) brightness(0) opacity(0.6);
+    transition: filter 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.press-logos img:hover { filter: grayscale(0) brightness(0.4) opacity(1); transform: translateY(-2px); }
+.press-logos .text-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--text-mute);
+    letter-spacing: 0.02em;
+    font-weight: 500;
+    transition: color 0.4s var(--ease);
+}
+.press-logos .text-logo:hover { color: var(--primary); }
+.press-logos .text-logo.sans {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VOICES — testimonials
+   ═══════════════════════════════════════════════════════════════════ */
+.voices {
+    padding: 10rem 0;
+    background: var(--cream-warm);
+    position: relative;
+    overflow: hidden;
+}
+.voices-header { text-align: center; margin-bottom: 5rem; }
+.voices-header .label { color: var(--accent); margin-bottom: 1.5rem; }
+.voices-header h2 {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 22ch;
+    margin: 0 auto;
+}
+.voices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+}
+@media (max-width: 900px) { .voices-grid { grid-template-columns: 1fr; gap: 2rem; } }
+.voice {
+    background: var(--cream);
+    padding: 3rem 2.5rem;
+    position: relative;
+    transition: all 0.5s var(--ease);
+}
+.voice:hover { transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+.voice::before {
+    content: '"';
+    position: absolute;
+    top: 1rem; left: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: var(--accent-soft);
+    font-style: italic;
+    line-height: 1;
+    opacity: 0.4;
+}
+.voice-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+}
+.voice-attr {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.voice-attr-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+.voice-attr-text { font-size: 0.88rem; }
+.voice-attr-text .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--primary);
+    display: block;
+}
+.voice-attr-text .meta {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: var(--text-mute);
+    margin-top: 0.2rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FAQ — collapsible, schema-ready
+   ═══════════════════════════════════════════════════════════════════ */
+.faq { padding: 10rem 0; }
+.faq-container { max-width: 900px; margin: 0 auto; padding: 0 2.5rem; }
+.faq-header { text-align: center; margin-bottom: 5rem; }
+.faq-header .label { color: var(--accent); margin-bottom: 1.5rem; }
+.faq-header h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 22ch;
+    margin: 0 auto 1.5rem;
+}
+.faq-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--text-mute);
+    font-style: italic;
+    max-width: 48ch;
+    margin: 0 auto;
+}
+.faq-item {
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s var(--ease);
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-item[open] { border-color: var(--border-strong); }
+.faq-item summary {
+    padding: 2rem 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+    font-weight: 400;
+    color: var(--primary);
+    font-style: italic;
+    line-height: 1.4;
+    transition: color 0.3s var(--ease);
+    list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--accent-deep); }
+.faq-item .plus {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform 0.4s var(--ease-dramatic);
+    line-height: 1;
+    margin-top: 0.2rem;
+}
+.faq-item[open] .plus { transform: rotate(45deg); }
+.faq-item .faq-answer {
+    padding: 0 0 2.5rem 0;
+    max-width: 60ch;
+}
+.faq-item .faq-answer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text-mute);
+    font-style: italic;
+    font-weight: 300;
+}
+.faq-item .faq-answer p + p { margin-top: 1rem; }
+.faq-item .faq-answer strong {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   JOURNAL TEASER
+   ═══════════════════════════════════════════════════════════════════ */
+.journal {
+    padding: 10rem 0;
+    background: var(--cream-warm);
+}
+.journal-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 2.5rem;
+    margin-bottom: 4rem;
+    max-width: 1280px;
+    margin-left: auto; margin-right: auto;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+.journal-header .label { color: var(--accent); margin-bottom: 1rem; }
+.journal-header h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 18ch;
+}
+.journal-header .journal-link {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--primary);
+    transition: all 0.3s var(--ease);
+}
+.journal-header .journal-link:hover { color: var(--accent-deep); border-color: var(--accent-deep); }
+.journal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+}
+@media (max-width: 900px) { .journal-grid { grid-template-columns: 1fr; gap: 2rem; } }
+.journal-card { cursor: pointer; }
+.journal-card-img {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--cream-deep);
+    margin-bottom: 1.5rem;
+}
+.journal-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.6s var(--ease-out);
+}
+.journal-card:hover .journal-card-img img { transform: scale(1.05); }
+.journal-card-meta {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    color: var(--accent-deep);
+    margin-bottom: 0.7rem;
+}
+.journal-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--primary);
+    line-height: 1.25;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s var(--ease);
+    max-width: 20ch;
+}
+.journal-card:hover h3 { color: var(--accent-deep); }
+.journal-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text-mute);
+    line-height: 1.55;
+    font-style: italic;
+    max-width: 32ch;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NEWSLETTER
+   ═══════════════════════════════════════════════════════════════════ */
+.newsletter {
+    padding: 10rem 0;
+    background: var(--primary);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.newsletter::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201, 168, 124, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.newsletter-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 0 2.5rem; }
+.newsletter .label { color: var(--accent-soft); margin-bottom: 1.5rem; }
+.newsletter h2 {
+    font-size: clamp(2.3rem, 4.5vw, 3.4rem);
+    color: var(--cream);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+    margin-left: auto; margin-right: auto;
+}
+.newsletter h2 em { color: var(--accent-soft); font-style: italic; }
+.newsletter p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: rgba(250, 248, 243, 0.75);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 38ch;
+    margin-left: auto; margin-right: auto;
+}
+.newsletter-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    max-width: 520px;
+    margin: 0 auto;
+}
+@media (max-width: 600px) { .newsletter-form { grid-template-columns: 1fr; } }
+.newsletter-form input {
+    padding: 1.1rem 1.4rem;
+    background: transparent;
+    border: 1px solid rgba(250, 248, 243, 0.3);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s var(--ease);
+}
+.newsletter-form input::placeholder { color: rgba(250, 248, 243, 0.4); }
+.newsletter-form input:focus { outline: none; border-color: var(--accent); }
+.newsletter-form button {
+    padding: 1.1rem 2rem;
+    background: var(--accent);
+    color: var(--cream);
+    border: 1px solid var(--accent);
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+}
+.newsletter-form button:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.newsletter-fineprint {
+    margin-top: 1.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: rgba(250, 248, 243, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════ */
+.footer {
+    background: #0f0f0f;
+    color: rgba(250, 248, 243, 0.6);
+    padding: 6rem 0 2rem;
+}
+.footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+}
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+}
+@media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+@media (max-width: 500px) { .footer-top { grid-template-columns: 1fr; gap: 2.5rem; } }
+.footer-brand {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+.footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: rgba(250, 248, 243, 0.55);
+    font-style: italic;
+    line-height: 1.55;
+    max-width: 30ch;
+    margin-bottom: 2rem;
+}
+.footer-social {
+    display: flex; gap: 1rem;
+    margin-top: 1.5rem;
+}
+.footer-social a {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(250, 248, 243, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s var(--ease);
+    color: rgba(250, 248, 243, 0.6);
+}
+.footer-social a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.footer-social svg { width: 16px; height: 16px; }
+.footer-col-title {
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.7rem; }
+.footer-col a {
+    font-size: 0.92rem;
+    color: rgba(250, 248, 243, 0.55);
+    transition: color 0.3s var(--ease);
+}
+.footer-col a:hover { color: var(--accent-soft); }
+.footer-bottom {
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(250, 248, 243, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: rgba(250, 248, 243, 0.35);
+}
+.footer-bottom a { color: rgba(250, 248, 243, 0.4); transition: color 0.3s var(--ease); }
+.footer-bottom a:hover { color: var(--accent-soft); }
+.footer-bottom-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL REVEAL
+   ═══════════════════════════════════════════════════════════════════ */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+}
+[data-reveal].visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     NAVIGATION
+     ════════════════════════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+    <div class="nav-left">
+        <a href="#stay" class="nav-link">Stay</a>
+        <a href="#host" class="nav-link">Host a retreat</a>
+        <a href="#estates" class="nav-link">Estates</a>
+        <a href="/journal/" class="nav-link">Journal</a>
+    </div>
+    <a href="/" class="nav-brand">Nomadikas</a>
+    <div class="nav-right">
+        <a href="/about/" class="nav-link">About</a>
+        <a href="#press" class="nav-link">Press</a>
+        <a href="/contact/" class="nav-cta">Start a conversation</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-bg hero-bg-img-1"></div>
+    <div class="hero-content">
+        <div class="hero-supertitle">
+            Small estates <span class="dot">·</span> Long anchors <span class="dot">·</span> Few guests
+        </div>
+        <h1 class="hero-headline" id="heroHeadline">
+            <span class="line active" data-line="0">The world<br><span class="accent">slows</span> down here.</span>
+            <span class="line" data-line="1">This is where<br><span class="accent">retreats</span> happen.</span>
+            <span class="line" data-line="2">For the weeks<br>you'll <span class="accent">remember</span>.</span>
+        </h1>
+        <p class="hero-sub">Seven architecture-led estates across Bali, Portugal, Costa Rica and Greece. Curated one property at a time — for the friends you'd travel for, the retreats you'd host, the weeks you'd come home changed from.</p>
+        <div class="hero-cta-row">
+            <a href="#stay" class="btn-hero filled">
+                See the estates
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#host" class="btn-hero">
+                Host a retreat
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+    </div>
+    <div class="hero-scroll-cue">
+        <div class="label-scroll">Scroll</div>
+        <div class="line"></div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     INTRO — Darina's voice
+     ════════════════════════════════════════════════════════════════ -->
+<section class="intro container" data-reveal>
+    <div class="label">From the founder</div>
+    <p class="intro-quote">
+        Seven years ago I started looking for places where the week changed people.<br>
+        Not the Instagram kind. The <em>quiet kind</em>. The ones where you come home<br>
+        a slightly different person than when you left.
+    </p>
+    <div class="divider-gold"></div>
+    <div class="intro-byline">
+        — <span class="name">Darina Angelow</span>, founder
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     THREE DOORS
+     ════════════════════════════════════════════════════════════════ -->
+<section class="doors container" id="stay" data-reveal>
+    <div class="doors-header">
+        <div class="label">Three ways in</div>
+        <h2>However you're arriving, there's a door for you.</h2>
+        <p>The same estates serve three very different weeks. Tell us which one is yours and we'll show you only what fits.</p>
+    </div>
+    <div class="doors-grid">
+        <a href="/luxury-rentals/" class="door">
+            <div class="door-content">
+                <div class="number">01 — Private</div>
+                <h3>A home for<br>the week.</h3>
+                <p class="door-sub">Full buyout of the estate, just for your people. Two to twenty-six guests, handpicked staff, no other bookings on the land.</p>
+                <div class="door-cta">
+                    See the estates
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+            </div>
+        </a>
+        <a href="/host/retreat-venues/" class="door" id="host">
+            <div class="door-content">
+                <div class="number">02 — Hosted</div>
+                <h3>A venue for<br>your retreat.</h3>
+                <p class="door-sub">Yoga, pilates, breathwork, menopause, corporate offsite. Estates pre-vetted for shala space, chef capacity, transfer logistics.</p>
+                <div class="door-cta">
+                    See venue estates
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+            </div>
+        </a>
+        <a href="/partners/" class="door">
+            <div class="door-content">
+                <div class="number">03 — Partner</div>
+                <h3>A stage for<br>your practice.</h3>
+                <p class="door-sub">For teachers, facilitators and operators. Apply once. Matched with estates, budgets and weeks that fit your style.</p>
+                <div class="door-cta">
+                    Apply to teach
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SIGNATURE ESTATES — horizontal scroll
+     ════════════════════════════════════════════════════════════════ -->
+<section class="estates-section" id="estates">
+    <div class="estates-header" data-reveal>
+        <div>
+            <div class="label">The estates</div>
+            <h2>Seven properties.<br>One philosophy.</h2>
+        </div>
+        <div class="estates-header-right">
+            <p>Each one bought into personally. Each one walked before it was listed. No two the same — but every one answers the same question: <em>would I send my closest friends here?</em></p>
+        </div>
+    </div>
+    <div class="estates-scroll-wrap">
+        <div class="estates-scroll" id="estatesScroll">
+            <a href="/luxury-rentals/villa-hermosa-santa-teresa/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">01</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2025/02/Jungle.jpg" alt="Villa Hermosa — beachfront villa on Playa Hermosa, Costa Rica"/>
+                </div>
+                <div class="estate-card-location">Santa Teresa · Costa Rica</div>
+                <h3 class="estate-card-name">Villa Hermosa</h3>
+                <p class="estate-card-desc">Beachfront, six bedrooms, three minutes to Playa Hermosa. The most-booked estate in the collection.</p>
+                <div class="estate-card-spec">
+                    <span>6 bed</span>
+                    <span>12 guests</span>
+                    <span>Full buyout</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/villa-tropical-santa-teresa/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">02</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2021/03/annie-spratt-JLpDkdcuceI-unsplash-scaled.jpg" alt="Villa Tropical — ocean-view villa in Santa Teresa, Costa Rica"/>
+                </div>
+                <div class="estate-card-location">Santa Teresa · Costa Rica</div>
+                <h3 class="estate-card-name">Villa Tropical</h3>
+                <p class="estate-card-desc">Four bedrooms on the ridge, ocean-view, open-air living, three-minute walk to surf.</p>
+                <div class="estate-card-spec">
+                    <span>4 bed</span>
+                    <span>8 guests</span>
+                    <span>Private pool</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/estate-vista-hermosa-costa-rica/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">03</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2021/01/DJI_0182-scaled.jpg" alt="Estate Vista Hermosa — clifftop retreat venue on Playa Hermosa"/>
+                </div>
+                <div class="estate-card-location">Santa Teresa · Costa Rica</div>
+                <h3 class="estate-card-name">Estate Vista Hermosa</h3>
+                <p class="estate-card-desc">Clifftop retreat venue built around buyout — yoga shala, 10 rooms, ocean panorama.</p>
+                <div class="estate-card-spec">
+                    <span>10 rooms</span>
+                    <span>20 guests</span>
+                    <span>Retreat venue</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/estate-manta-cliff-nusa-penida/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">04</span>
+                    <img src="https://vincentbraakman-glitch.github.io/nomadikas-indonesia/assets/manta-shala-aerial.webp" alt="Estate Manta Cliff — manta-shaped bamboo shala on Diamond Beach, Nusa Penida"/>
+                </div>
+                <div class="estate-card-location">Nusa Penida · Indonesia</div>
+                <h3 class="estate-card-name">Estate Manta Cliff</h3>
+                <p class="estate-card-desc">13 rammed-earth tent suites on the cliff above Diamond Beach. Manta-shaped shala, private beach, chef-led kitchen.</p>
+                <div class="estate-card-spec">
+                    <span>13 suites</span>
+                    <span>26 guests</span>
+                    <span>Buyout retreat</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/estate-fonte-das-perdizes-melides/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">05</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2020/12/nomadikas-7-1-scaled.webp" alt="Estate Fonte das Perdizes — architect-designed farmhouse in Melides, Portugal"/>
+                </div>
+                <div class="estate-card-location">Melides · Portugal</div>
+                <h3 class="estate-card-name">Estate Fonte das Perdizes</h3>
+                <p class="estate-card-desc">Architect-designed farmhouse in Alentejo. Rammed earth, cork forests, Atlantic ten minutes away.</p>
+                <div class="estate-card-spec">
+                    <span>5 bed</span>
+                    <span>10 guests</span>
+                    <span>Eco villa</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/estate-barefoot-sumba/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">06</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2024/11/2.jpg" alt="Estate Barefoot Sumba — surf-side retreat in Sumba, Indonesia"/>
+                </div>
+                <div class="estate-card-location">Sumba · Indonesia</div>
+                <h3 class="estate-card-name">Estate Barefoot Sumba</h3>
+                <p class="estate-card-desc">Surf-side retreat on Sumba's southwest coast. Traditional ikat interiors, ocean pools, surf-school on property.</p>
+                <div class="estate-card-spec">
+                    <span>8 rooms</span>
+                    <span>16 guests</span>
+                    <span>Surf + retreat</span>
+                </div>
+            </a>
+            <a href="/luxury-rentals/estate-nihi-cliff-sumba/" class="estate-card">
+                <div class="estate-card-img">
+                    <span class="estate-card-num">07</span>
+                    <img src="https://nomadikas.com/wp-content/uploads/2023/02/2.jpg" alt="Estate Nihi Cliff — clifftop private compound in Sumba"/>
+                </div>
+                <div class="estate-card-location">Sumba · Indonesia</div>
+                <h3 class="estate-card-name">Estate Nihi Cliff</h3>
+                <p class="estate-card-desc">Clifftop compound above the legendary left-break. Six suites, private spa, cinematic arrival.</p>
+                <div class="estate-card-spec">
+                    <span>6 suites</span>
+                    <span>12 guests</span>
+                    <span>Full buyout</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="estates-nav">
+        <button onclick="scrollEstates(-1)" aria-label="Previous estate">‹</button>
+        <button onclick="scrollEstates(1)" aria-label="Next estate">›</button>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOUNDER CUT — Darina
+     ════════════════════════════════════════════════════════════════ -->
+<section class="founder container" data-reveal>
+    <div class="founder-grid">
+        <div class="founder-img-wrap">
+            <img src="https://nomadikas.com/wp-content/uploads/2025/01/12-2.webp" alt="Darina Angelow, founder of Nomadikas"/>
+            <div class="founder-img-caption">Darina Angelow, Santa Teresa</div>
+        </div>
+        <div class="founder-content">
+            <div class="label">The curator</div>
+            <h2>I scout every property <em>before</em> you see it.</h2>
+            <p>Most don't make the list. The ones that do become Nomadikas.</p>
+            <p>I grew up between Bulgaria and the Adriatic. I spent my twenties trying to build a company that made sense of how I actually wanted to travel — small estates, long weeks, people who run the kitchen the same way their grandmother did.</p>
+            <p>Nomadikas is what I settled on. Seven estates. Four countries. One question in front of every listing: <em>would I send my closest friends here?</em></p>
+            <div class="signature">Darina</div>
+            <p class="attribution">Founder · Nomadikas<br>Based between Sofia and Santa Teresa</p>
+            <div class="founder-credentials">
+                <div class="credential"><strong>7</strong>Estates curated</div>
+                <div class="credential"><strong>4</strong>Countries</div>
+                <div class="credential"><strong>70+</strong>Retreats hosted</div>
+                <div class="credential"><strong>2018</strong>Founded</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     COUNTER-POSITIONING
+     ════════════════════════════════════════════════════════════════ -->
+<section class="counter">
+    <div class="container counter-grid" data-reveal>
+        <div class="counter-left">
+            <div class="label">Counter-positioning</div>
+            <h2>What you <em>won't</em> find at a Nomadikas estate.</h2>
+            <p>We built the list by subtraction. If it was anywhere else on the booking sites, it wasn't for us. Some of what we said no to:</p>
+        </div>
+        <ul class="counter-list">
+            <li><span class="x">×</span> Resort chains with seven hundred rooms pretending to be boutique</li>
+            <li><span class="x">×</span> Concierge teams you've never spoken to before you arrive</li>
+            <li><span class="x">×</span> Prices that double in peak season without anything changing</li>
+            <li><span class="x">×</span> Interiors that look the same in Tulum, Ubud and Ibiza</li>
+            <li><span class="x">×</span> Yoga schedules printed by the hotel, not built for the group</li>
+            <li><span class="x">×</span> Check-in desks, room cards, minibars, spa menus</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PRESS
+     ════════════════════════════════════════════════════════════════ -->
+<section class="press" id="press">
+    <div class="label">As written about in</div>
+    <div class="press-logos" data-reveal>
+        <img src="https://nomadikas.com/wp-content/uploads/2025/01/nationalgeowhite.webp" alt="National Geographic Traveller"/>
+        <img src="https://nomadikas.com/wp-content/uploads/2025/01/trav-logo_white.webp" alt="Traveller"/>
+        <span class="text-logo">Condé Nast Traveler</span>
+        <img src="https://nomadikas.com/wp-content/uploads/2025/04/Logo-Nourish-Magazine.png" alt="Nourish Magazine"/>
+        <img src="https://nomadikas.com/wp-content/uploads/2025/04/Logo-your-Day-Magazine.png" alt="Your Day Magazine"/>
+        <span class="text-logo sans">Glow</span>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     VOICES — testimonials [FLAG: replace with real quotes]
+     ════════════════════════════════════════════════════════════════ -->
+<section class="voices">
+    <div class="voices-header" data-reveal>
+        <div class="label">Guest voices</div>
+        <h2>What the week sounded like afterwards.</h2>
+    </div>
+    <div class="voices-grid" data-reveal>
+        <div class="voice">
+            <p class="voice-quote">We'd been looking for somewhere that could hold sixteen women for a menopause retreat without feeling like a hotel. Estate Vista Hermosa held them, fed them, and — we genuinely didn't expect this — changed a few of them.</p>
+            <div class="voice-attr">
+                <div class="voice-attr-avatar">A</div>
+                <div class="voice-attr-text">
+                    <span class="name">Amelia Bates</span>
+                    <div class="meta">Retreat leader · London</div>
+                </div>
+            </div>
+        </div>
+        <div class="voice">
+            <p class="voice-quote">Ten of us, one house, one week in Melides. First morning Darina sent a box of pastries and three cards naming every bird in the garden. That's the Nomadikas standard. We've already booked next year.</p>
+            <div class="voice-attr">
+                <div class="voice-attr-avatar">M</div>
+                <div class="voice-attr-text">
+                    <span class="name">Marcus Feldberg</span>
+                    <div class="meta">Private rental · Munich</div>
+                </div>
+            </div>
+        </div>
+        <div class="voice">
+            <p class="voice-quote">Our engineering team came to Nusa Penida expecting an offsite. They left writing a new roadmap on the shala floor. The estate does something to people that a boardroom cannot.</p>
+            <div class="voice-attr">
+                <div class="voice-attr-avatar">P</div>
+                <div class="voice-attr-text">
+                    <span class="name">Priya Nair</span>
+                    <div class="meta">COO · SaaS company, Amsterdam</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FAQ
+     ════════════════════════════════════════════════════════════════ -->
+<section class="faq">
+    <div class="faq-container">
+        <div class="faq-header" data-reveal>
+            <div class="label">Common questions</div>
+            <h2>What retreat leaders and private guests ask most.</h2>
+            <p>The short answers. For anything else, <a href="/contact/" style="color: var(--accent-deep); border-bottom: 1px solid var(--accent-deep); padding-bottom: 2px;">write to Darina directly</a>.</p>
+        </div>
+
+        <details class="faq-item" data-reveal>
+            <summary>What makes a property a Nomadikas estate? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p>Three things, in this order. <strong>One — an architectural hook</strong> we can point at: rammed earth, bamboo vaults, an architect's name, a material that isn't replicable elsewhere. <strong>Two — a week that changes people</strong>: the land has to do something, not just look like something. <strong>Three — the owner's standards</strong>: we only list estates where the operator cares as much as Darina does.</p>
+                <p>Most properties we look at don't make the list. The rejection rate is somewhere around nine in ten.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>Is every estate available for full buyout? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>Yes.</strong> Buyout is the default way Nomadikas estates operate. For private weeks (families, friend groups), the whole property is yours — no other bookings, no other guests on the land. For retreats, buyout is required and includes full use of the shala, kitchen, staff, and transfers.</p>
+                <p>A handful of estates do accept individual room bookings during specific weeks of the year. Ask us which — it changes by destination.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>Can I host a wellness retreat at a Nomadikas estate? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>Yes — this is what most of the portfolio is built for.</strong> Yoga, pilates, breathwork, menopause, sobriety, writing, grief, corporate offsites — all common. Every estate has either a dedicated shala or a convertible space; every estate has chef capacity for retreat-style catering; every estate has done at least one retreat before.</p>
+                <p>When you enquire, we match you to the estates that fit your group size, practice type, and budget — not the whole list.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>Do you handle corporate offsites? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>Yes, and it's the fastest-growing part of what we do.</strong> Engineering leadership teams, C-suites, founding teams — groups of 8 to 26 taking a week somewhere that isn't a hotel. The estate gives you whiteboards that are fields, boardrooms that are shalas, and evenings that are dinners the team actually wants to be at.</p>
+                <p>We coordinate transfers, dietary requirements, activity schedules, and — if you want — a facilitator. Most groups book 6 to 10 weeks out.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>How far ahead should I book? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>For private rentals:</strong> 3–6 months for shoulder season, 6–9 months for peak season (July/August in Europe, December–March in Costa Rica and Bali).</p>
+                <p><strong>For retreats:</strong> 9–14 months. Retreat weeks book earlier because the group signup cycle is longer, and the best dates across all seven estates are gone by the March before.</p>
+                <p><strong>For corporate buyouts:</strong> 2–4 months is typical and usually works outside of holiday windows.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>What's included in the rental? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>Always:</strong> the full estate, all rooms, all common areas, housekeeping, welcome basket, arrival transfer from the nearest airport.</p>
+                <p><strong>Usually:</strong> in-house chef for breakfast and dinner, daily coffee service, basic yoga props, pool/beach setup.</p>
+                <p><strong>Optional:</strong> dedicated retreat host, teacher introduction, activity planning, full-board catering, private excursions.</p>
+                <p>Every enquiry gets a line-by-line inclusions sheet before you commit. No surprises.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>Do you help plan the week, or just provide the estate? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p><strong>Both — you choose.</strong> Some guests want the keys and a recommendation for the best restaurant in town. Others want Darina to shape the arc of the week — sunrise activities, local partners, evenings built around who's coming.</p>
+                <p>The default is somewhere in the middle: we send a complete welcome pack with everything we know about the land and the region, and you decide how much of it you use.</p>
+            </div>
+        </details>
+
+        <details class="faq-item" data-reveal>
+            <summary>What's the typical price range? <span class="plus">+</span></summary>
+            <div class="faq-answer">
+                <p>Nightly rates across the portfolio run from €1,800 to €12,000 per night depending on estate, season, and group size. Weekly retreat buyouts (all-inclusive, staffed, catered) typically sit between €28,000 and €110,000 per week.</p>
+                <p>Every enquiry gets three estate options at different price points, with transparent breakdowns. Nothing gets quoted that isn't spelled out line by line.</p>
+            </div>
+        </details>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     JOURNAL TEASER — [FLAG: connect to real posts]
+     ════════════════════════════════════════════════════════════════ -->
+<section class="journal">
+    <div class="journal-header" data-reveal>
+        <div>
+            <div class="label">The journal</div>
+            <h2>Field notes from seven estates.</h2>
+        </div>
+        <a href="/journal/" class="journal-link">
+            Read all entries
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+    </div>
+    <div class="journal-grid" data-reveal>
+        <a href="/journal/corporate-retreat-venue-bali-guide/" class="journal-card">
+            <div class="journal-card-img">
+                <img src="https://nomadikas.com/wp-content/uploads/2023/07/31.jpg" alt="How to choose a corporate retreat venue in Bali"/>
+            </div>
+            <div class="journal-card-meta">Guide · 12 min read</div>
+            <h3>How to pick a corporate retreat venue in Bali that doesn't embarrass the exec team.</h3>
+            <p>The eight questions we ask every Nusa Penida estate before we recommend it. Most fail on three.</p>
+        </a>
+        <a href="/journal/melides-the-quiet-neighbour/" class="journal-card">
+            <div class="journal-card-img">
+                <img src="https://nomadikas.com/wp-content/uploads/2020/12/nomadikas-7-1-scaled.webp" alt="Melides — Portugal's quiet neighbour to Comporta"/>
+            </div>
+            <div class="journal-card-meta">Destination · 8 min read</div>
+            <h3>Melides is where Comporta went ten years ago. For now.</h3>
+            <p>What the Atlantic coast below Lisbon still has that the rest of Europe has mostly lost.</p>
+        </a>
+        <a href="/journal/rammed-earth-architecture-why/" class="journal-card">
+            <div class="journal-card-img">
+                <img src="https://nomadikas.com/wp-content/uploads/2025/02/Jungle.jpg" alt="Why rammed earth keeps showing up in architecture-led retreat design"/>
+            </div>
+            <div class="journal-card-meta">Craft · 6 min read</div>
+            <h3>Rammed earth keeps turning up. Here's what it actually does to a week.</h3>
+            <p>The material you can feel on your skin and hear when the rain comes in. Three of our estates use it.</p>
+        </a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     NEWSLETTER
+     ════════════════════════════════════════════════════════════════ -->
+<section class="newsletter">
+    <div class="newsletter-inner">
+        <div class="label">The quiet list</div>
+        <h2>Six estates.<br>One email.<br><em>Four</em> times a year.</h2>
+        <p>New estates, rare openings, and stories from the places we send people. No more than four emails a year. Unsubscribe in one click.</p>
+        <form class="newsletter-form" action="#" method="post">
+            <input type="email" name="email" placeholder="Your email" required/>
+            <button type="submit">Join the list</button>
+        </form>
+        <div class="newsletter-fineprint">No spam · No daily digest · One-click out</div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand-col">
+                <div class="footer-brand">Nomadikas</div>
+                <p class="footer-tagline">Small estates. Long anchors. Architecture-led villa rentals and retreat venues across four countries.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/nomadikas" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                    </a>
+                    <a href="https://facebook.com/nomadikas" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-1.65 0-3 1.35-3 3v2H9v3h2v7h3v-7h3l1-3h-4V9z"/></svg>
+                    </a>
+                    <a href="mailto:hello@nomadikas.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Stay</div>
+                <ul>
+                    <li><a href="/luxury-rentals/">All estates</a></li>
+                    <li><a href="/destinations/costa-rica/">Costa Rica</a></li>
+                    <li><a href="/destinations/portugal/">Portugal</a></li>
+                    <li><a href="/destinations/indonesia/">Indonesia</a></li>
+                    <li><a href="/destinations/greece/">Greece</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Host</div>
+                <ul>
+                    <li><a href="/host/retreat-venues/">Retreat venues</a></li>
+                    <li><a href="/host/corporate-offsites/">Corporate offsites</a></li>
+                    <li><a href="/host/wedding-venues/">Wedding venues</a></li>
+                    <li><a href="/host/yoga-retreats/">Yoga retreats</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Nomadikas</div>
+                <ul>
+                    <li><a href="/about/">About Darina</a></li>
+                    <li><a href="/journal/">Journal</a></li>
+                    <li><a href="/press/">Press</a></li>
+                    <li><a href="/partners/">Teach with us</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 Nomadikas · Curated by Darina Angelow</div>
+            <div class="footer-bottom-links">
+                <a href="/imprint/">Imprint</a>
+                <a href="/terms/">Terms</a>
+                <a href="/privacy/">Privacy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════════
+     JSON-LD @graph — Organization, TravelAgency, FAQPage, BreadcrumbList
+     ════════════════════════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://nomadikas.com/#organization",
+      "name": "Nomadikas",
+      "alternateName": "Nomadikas Estates",
+      "url": "https://nomadikas.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nomadikas.com/wp-content/uploads/2025/01/cropped-cropped-Untitled-design-1.webp",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Architecture-led villa rentals and retreat venues across Bali, Portugal, Costa Rica and Greece. Curated by Darina Angelow.",
+      "founder": {
+        "@type": "Person",
+        "@id": "https://nomadikas.com/#darina",
+        "name": "Darina Angelow",
+        "jobTitle": "Founder",
+        "worksFor": { "@id": "https://nomadikas.com/#organization" }
+      },
+      "foundingDate": "2018",
+      "sameAs": [
+        "https://instagram.com/nomadikas",
+        "https://facebook.com/nomadikas"
+      ]
+    },
+    {
+      "@type": "TravelAgency",
+      "@id": "https://nomadikas.com/#travelagency",
+      "name": "Nomadikas",
+      "url": "https://nomadikas.com/",
+      "parentOrganization": { "@id": "https://nomadikas.com/#organization" },
+      "areaServed": [
+        { "@type": "Country", "name": "Indonesia" },
+        { "@type": "Country", "name": "Portugal" },
+        { "@type": "Country", "name": "Costa Rica" },
+        { "@type": "Country", "name": "Greece" }
+      ],
+      "makesOffer": [
+        { "@type": "Offer", "name": "Private villa rental", "category": "LodgingReservation" },
+        { "@type": "Offer", "name": "Retreat venue buyout", "category": "LodgingReservation" },
+        { "@type": "Offer", "name": "Corporate offsite venue", "category": "LodgingReservation" }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nomadikas.com/#website",
+      "url": "https://nomadikas.com/",
+      "name": "Nomadikas",
+      "publisher": { "@id": "https://nomadikas.com/#organization" },
+      "inLanguage": "en-GB",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://nomadikas.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What makes a property a Nomadikas estate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three things: an architectural hook (rammed earth, an architect's name, a material you can't replicate elsewhere), a week that changes people, and owner standards that match Darina's. Roughly nine in ten properties we look at don't make the list."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is every Nomadikas estate available for full buyout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Buyout is the default way Nomadikas estates operate. For private weeks the whole property is yours — no other bookings on the land. A handful of estates accept individual room bookings in specific weeks; ask us which."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I host a wellness retreat at a Nomadikas estate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — this is what most of the portfolio is built for. Yoga, pilates, breathwork, menopause, corporate offsites. Every estate has either a dedicated shala or a convertible space, chef capacity for retreat-style catering, and has hosted at least one retreat before."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you handle corporate offsites?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it's the fastest-growing part of Nomadikas. Groups of 8 to 26 — engineering leadership, C-suites, founding teams. We coordinate transfers, dietary needs, activity schedules and facilitators. Most groups book 6 to 10 weeks out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How far ahead should I book a Nomadikas estate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Private rentals: 3–6 months shoulder, 6–9 months peak. Retreats: 9–14 months because the group signup cycle is longer. Corporate buyouts: 2–4 months is typical outside holiday windows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the typical price range?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nightly rates across the portfolio run €1,800 to €12,000 depending on estate, season and group size. Weekly retreat buyouts typically sit between €28,000 and €110,000 all-inclusive. Every enquiry gets three estate options at different price points with transparent breakdowns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's included in a Nomadikas rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Always: full estate, all rooms, housekeeping, welcome basket, arrival transfer. Usually: in-house chef for breakfast and dinner, daily coffee, basic yoga props. Optional: dedicated retreat host, teacher introduction, full-board catering, private excursions. Every enquiry gets a line-by-line inclusions sheet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you help plan the week, or just provide the estate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both — you choose. Some guests want the keys and a restaurant recommendation. Others want Darina to shape the whole arc of the week. Default is a complete welcome pack with everything we know about the land and region, and you decide how much to use."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCRIPTS
+     ════════════════════════════════════════════════════════════════ -->
+<script>
+/* Sticky nav color shift on scroll */
+const nav = document.getElementById('nav');
+const heroH = window.innerHeight - 60;
+window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.85) {
+        nav.classList.add('solid');
+    } else {
+        nav.classList.remove('solid');
+    }
+}, { passive: true });
+
+/* Kinetic hero headline — rotate through the three lines */
+const lines = document.querySelectorAll('.hero-headline .line');
+let currentLine = 0;
+setInterval(() => {
+    lines[currentLine].classList.remove('active');
+    currentLine = (currentLine + 1) % lines.length;
+    lines[currentLine].classList.add('active');
+}, 5000);
+
+/* Estate horizontal scroll */
+function scrollEstates(dir) {
+    const container = document.getElementById('estatesScroll');
+    const cardW = container.querySelector('.estate-card').offsetWidth + 32;
+    container.scrollBy({ left: cardW * dir, behavior: 'smooth' });
+}
+
+/* Scroll-reveal via IntersectionObserver */
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+/* FAQ — close others when one opens (accordion behaviour) */
+document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+        if (item.open) {
+            document.querySelectorAll('.faq-item[open]').forEach(other => {
+                if (other !== item) other.open = false;
+            });
+        }
+    });
+});
+
+/* Newsletter form — soft handler */
+document.querySelector('.newsletter-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'On the list';
+    setTimeout(() => { btn.textContent = 'Join the list'; e.target.reset(); }, 2400);
+});
+</script>
+</body>
+</html>
