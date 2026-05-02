@@ -282,39 +282,36 @@ button { font-family: inherit; cursor: pointer; }
     max-width: 1360px; margin: 0 auto; width: 100%;
     position: relative; z-index: 2;
 }
-.hero-eyebrow {
+/* ═══════════════ CLEAN HERO — eyebrow + title only ═══════════════ */
+.hero-content-min {
+    /* anchor to bottom-right like editorial property pages */
+    text-align: right;
+    margin-left: auto;
+}
+.hero-location {
     font-family: 'Josefin Sans', sans-serif;
     letter-spacing: 0.4em; text-transform: uppercase;
-    font-size: 0.68rem; color: rgba(250,248,243,0.85);
-    margin-bottom: 2rem;
-    opacity: 0; animation: fadeUp 1.4s var(--ease-out) 0.3s forwards;
+    font-size: clamp(0.65rem, 0.85vw, 0.78rem);
+    color: rgba(250,248,243,0.85);
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 1.4s var(--ease-out) 0.4s forwards;
 }
-.hero-eyebrow .dot { margin: 0 0.7rem; opacity: 0.5; }
-.hero-h1 {
-    font-family: 'Amiri', serif; font-weight: 400; font-style: italic;
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    line-height: 0.98; color: var(--cream);
-    margin-bottom: 1.5rem; letter-spacing: -0.02em;
-    max-width: 14ch;
-    opacity: 0; animation: fadeUp 1.4s var(--ease-out) 0.5s forwards;
+.hero-h1-clean {
+    font-family: 'Amiri', serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(2.6rem, 7vw, 6.8rem);
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.015em;
+    margin: 0;
+    opacity: 0; animation: fadeUp 1.6s var(--ease-out) 0.6s forwards;
+    white-space: nowrap;
 }
-.hero-h1 .stack-1 { display: block; }
-.hero-h1 .stack-2 { display: block; color: var(--brass-light); font-style: italic; }
-.hero-sub {
-    font-family: 'Montserrat', sans-serif; font-weight: 300;
-    font-size: clamp(1rem, 1.4vw, 1.18rem); line-height: 1.55;
-    color: rgba(250,248,243,0.88);
-    max-width: 56ch; margin-bottom: 3rem;
-    opacity: 0; animation: fadeUp 1.4s var(--ease-out) 0.8s forwards;
+@media (max-width: 720px) {
+    .hero-content-min { text-align: left; }
+    .hero-h1-clean { font-size: clamp(2.2rem, 9vw, 4.5rem); white-space: normal; line-height: 1.05; }
 }
-.hero-cta-row {
-    display: flex; gap: 2rem 2.5rem; flex-wrap: wrap; align-items: center;
-    opacity: 0; animation: fadeUp 1.4s var(--ease-out) 1.1s forwards;
-}
-.hero-cta-row .btn-filled {
-    background: var(--cream); color: var(--ink); border-color: var(--cream);
-}
-.hero-cta-row .btn-filled:hover { background: var(--brass); border-color: var(--brass); color: var(--cream); }
 .hero-scroll-cue {
     position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
@@ -966,33 +963,17 @@ button { font-family: inherit; cursor: pointer; }
 <section class="hero">
     <div class="hero-media-wrap">
         <!-- Fallback image (always rendered, sits behind video) -->
-        <img class="hero-image" src="https://nomadikas.com/wp-content/uploads/2025/03/Portugal-The-perfect-place-for-a-Wellness-Retreat-1.png" alt="Estate Fonte das Perdizes — rammed-earth main house in Melides, Alentejo Portugal"/>
-        <!-- Kling video (sits on top of image when loaded). REPLACE src once Kling video is generated. -->
+        <img class="hero-image" src="https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg" alt="Estate Fonte das Perdizes — rammed-earth villa across the infinity pool, Melides Alentejo Portugal"/>
+        <!-- Kling video (sits on top of image when loaded) -->
         <video class="hero-video" autoplay muted loop playsinline preload="metadata"
-               poster="https://nomadikas.com/wp-content/uploads/2025/03/Portugal-The-perfect-place-for-a-Wellness-Retreat-1.png">
-            <!-- Kling 2.1 generated 2026-05-02 — subtle pool/olive/sky motion -->
+               poster="https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg">
+            <!-- Kling 2.1 Pro generated 2026-05-02 — subtle pool/grass/sky motion on the official Flores-1 hero -->
             <source src="assets/hero-fonte.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="hero-content">
-        <div class="hero-eyebrow">
-            Melides <span class="dot">·</span> Alentejo <span class="dot">·</span> Portugal
-        </div>
-        <h1 class="hero-h1">
-            <span class="stack-1">Estate Fonte</span>
-            <span class="stack-2">das Perdizes.</span>
-        </h1>
-        <p class="hero-sub">An architect-designed eco estate by Eddie Roschi — six bedrooms, fourteen guests, rammed-earth walls carrying the ochre of the Alentejo soil itself. Olive groves, cork forests, and the Atlantic fifteen minutes south.</p>
-        <div class="hero-cta-row">
-            <a href="#inquiry" class="btn-filled">
-                Make a request
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-            <a href="#gallery" class="btn-underline light">
-                See the gallery
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-        </div>
+    <div class="hero-content hero-content-min">
+        <div class="hero-location">Melides, Portugal</div>
+        <h1 class="hero-h1-clean">Estate Fonte das Perdizes</h1>
     </div>
     <div class="hero-scroll-cue">
         <span>Scroll</span>
