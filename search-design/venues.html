@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nomadikas — Venues</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #F6F6F6; color: #2D2D2D; }
+  .font-heading { font-family: 'Amiri', serif; }
+  .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+
+  .search-pill { box-shadow: 0 30px 80px rgba(0,0,0,0.18); }
+  .search-segment { transition: background-color 0.25s ease; }
+  .search-segment:hover { background-color: #faf8f3; }
+  .search-segment.active { background-color: #ffffff; }
+
+  .intent-pill { transition: all 0.3s ease; }
+  .intent-pill.active { background-color: #1a1a1a; color: #faf8f3; border-color: #1a1a1a; }
+
+  .chip { transition: all 0.25s ease; }
+  .chip:hover { border-color: #1a1a1a; color: #1a1a1a; }
+  .chip.active { background-color: #1a1a1a; color: #faf8f3; border-color: #1a1a1a; }
+
+  .card-photo { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+  .card:hover .card-photo { transform: scale(1.04); }
+</style>
+</head>
+<body>
+
+<!-- Sticky header -->
+<header class="sticky top-0 z-50 px-8 py-5 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
+    <a href="homepage.html" class="font-heading italic text-xl tracking-tight">nomadikas</a>
+
+    <div class="hidden md:flex items-center divide-x divide-black/10 border border-black/12 rounded-full bg-white text-[0.78rem] px-1 py-1 hover:shadow-md transition-shadow cursor-pointer">
+      <span class="px-4 py-1.5">Wedding</span>
+      <span class="px-4 py-1.5 text-[#5a5a5a]">Any month</span>
+      <span class="px-4 py-1.5 text-[#5a5a5a]">Group size</span>
+      <span class="bg-[#1a1a1a] text-white rounded-full w-7 h-7 flex items-center justify-center">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </span>
+    </div>
+
+    <nav class="hidden md:flex gap-8 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a]">
+      <a href="homes.html" class="hover:text-black transition-colors">Homes</a>
+      <a href="venues.html" class="text-black border-b border-black pb-0.5">Venues</a>
+      <a href="#" class="hover:text-black transition-colors">Retreats</a>
+    </nav>
+
+    <a href="#concierge" class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] border border-black/30 px-4 py-2 hover:bg-black hover:text-white transition-colors">Speak to a curator</a>
+  </div>
+</header>
+
+<!-- Hero with EVENT-FIRST search bar -->
+<section class="relative h-[680px] overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1800&q=85');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/60"></div>
+
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
+    <p class="font-josefin uppercase tracking-[0.42em] text-[0.6rem] mb-6 opacity-80">Buyout-only homes for retreats, weddings, milestones &amp; corporate</p>
+    <h1 class="font-heading italic font-light leading-[1.05] mb-12" style="font-size: clamp(2.6rem, 5.5vw, 4.6rem);">
+      A home that holds<br />
+      the <em class="text-[#d4d2c5]">whole moment.</em>
+    </h1>
+
+    <!-- Intent pills above the bar — event type -->
+    <div class="flex flex-wrap justify-center gap-2.5 mb-7">
+      <button class="intent-pill active border border-white/40 text-white px-5 py-2 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5">Retreat</button>
+      <button class="intent-pill border border-white/40 text-white px-5 py-2 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Wedding</button>
+      <button class="intent-pill border border-white/40 text-white px-5 py-2 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Corporate offsite</button>
+      <button class="intent-pill border border-white/40 text-white px-5 py-2 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Milestone</button>
+      <button class="intent-pill border border-white/40 text-white px-5 py-2 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Other</button>
+    </div>
+
+    <!-- THE SEARCH BAR — event-first, four segments -->
+    <div class="search-pill bg-white rounded-full flex items-stretch divide-x divide-black/8 w-full max-w-[920px]">
+      <button class="search-segment active flex-1 px-7 py-5 text-left rounded-l-full">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Where</div>
+        <div class="text-[0.92rem] text-[#1a1a1a]">Anywhere</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Month</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">Choose month</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Group size</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">12 guests</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Stay</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">3 nights+</div>
+      </button>
+      <div class="flex items-center pr-2">
+        <button class="bg-[#1a1a1a] text-[#faf8f3] rounded-full px-7 py-4 hover:bg-[#8c8c79] transition-colors flex items-center gap-2.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <span class="font-josefin uppercase tracking-[0.28em] text-[0.66rem]">Find venues</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Curator CTA next to bar — high-touch differentiator -->
+    <p class="mt-8 text-white/75 text-[0.85rem] font-light">
+      Or just <a href="#concierge" class="italic underline decoration-white/40 underline-offset-4 hover:decoration-white text-white">tell us what you're planning</a> and we'll send three homes that fit.
+    </p>
+  </div>
+</section>
+
+<!-- Why filters strip -->
+<section class="px-8 py-8 bg-[#F6F6F6] border-b border-black/8">
+  <div class="max-w-7xl mx-auto flex items-center gap-3 overflow-x-auto whitespace-nowrap">
+    <span class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mr-3 flex-shrink-0">Refine</span>
+    <button class="chip active border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">All venues</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Sleeps 16+</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Sleeps 22+</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Yoga shala</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Event lawn</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Indoor dining hall</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">In-house chef</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Beachfront</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Vineyard</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Architecturally significant</button>
+    <span class="ml-auto flex-shrink-0 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a]">19 venues</span>
+  </div>
+</section>
+
+<!-- Editorial intro -->
+<section class="px-8 pt-16 pb-2 max-w-7xl mx-auto">
+  <div class="max-w-2xl">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-3">All venues</p>
+    <h2 class="font-heading italic font-light leading-[1.15] mb-4" style="font-size: clamp(1.6rem, 2.6vw, 2rem);">
+      Nineteen homes that hosted before. None of them feel like a venue.
+    </h2>
+    <p class="text-sm font-light text-[#5a5a5a] leading-relaxed max-w-[42ch]">
+      Every venue here has hosted retreats or events before. Shala space, chef capacity, dining lawn or hall, transfers logistics already worked out.
+    </p>
+  </div>
+</section>
+
+<!-- Results — venue cards have different details (capacity, what events hosted) -->
+<section class="px-8 pt-12 pb-16">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-14">
+
+      <!-- Venue 1 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 14 retreats</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Melides · Portugal</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Estate Fonte das Perdizes</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 22 in 11 bedrooms</li>
+          <li>· Yoga shala for 24 · Event lawn for 60</li>
+          <li>· In-house chef · Concierge included</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €33,600 / week buyout</p>
+      </a>
+
+      <!-- Venue 2 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1519741347686-c1e0aadf4611?w=900&q=80');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 8 retreats</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Comporta · Portugal</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Casa Joana</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 18 in 9 bedrooms</li>
+          <li>· Indoor shala · Beach 4 min walk</li>
+          <li>· Chef on call · Pinewood dining hall</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €24,500 / week buyout</p>
+      </a>
+
+      <!-- Venue 3 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=80');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 11 retreats</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Patmos · Greece</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Villa Pythos</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 16 in 8 bedrooms</li>
+          <li>· Sea-view yoga deck · Rooftop dining</li>
+          <li>· Resident chef · Greek restaurant network</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €28,000 / week buyout</p>
+      </a>
+
+      <!-- Venue 4 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900&q=80');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 6 weddings</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Mallorca · Spain</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Casa de los Sueños</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 24 in 12 bedrooms (8 guesthouse)</li>
+          <li>· Olive grove for ceremonies up to 80</li>
+          <li>· Wedding planner network on call</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €42,000 / week buyout</p>
+      </a>
+
+      <!-- Venue 5 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900&q=80');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 4 corporate</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Tuscany · Italy</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Podere La Volpe</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 20 in 10 bedrooms</li>
+          <li>· Vineyard · Two boardrooms · Pool</li>
+          <li>· Wifi 1Gbps · A/V kit included</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €36,000 / week buyout</p>
+      </a>
+
+      <!-- Venue 6 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black relative">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=900&q=80');"></div>
+          <span class="absolute top-4 left-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] bg-white/90 text-black px-3 py-1.5">Hosted 9 retreats</span>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Kalkan · Turkey</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Villa Karya</h3>
+        <ul class="text-[0.78rem] text-[#5a5a5a] space-y-1 leading-relaxed">
+          <li>· Sleeps 14 in 7 bedrooms</li>
+          <li>· Sea-cliff shala · Stone dining hall</li>
+          <li>· In-house chef · Boat for excursions</li>
+        </ul>
+        <p class="mt-4 text-[0.82rem] text-[#1a1a1a]">From €19,800 / week buyout</p>
+      </a>
+
+    </div>
+
+    <div class="mt-20 text-center">
+      <button class="font-josefin uppercase tracking-[0.32em] text-[0.66rem] border border-black/30 px-10 py-4 hover:bg-black hover:text-white transition-colors">Show all 19 venues</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Concierge — bigger here than on Homes -->
+<section id="concierge" class="px-8 py-32 bg-[#464543] text-white/85">
+  <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#a8a894] mb-6">Hosting is high-touch</p>
+      <h2 class="font-heading italic font-light leading-[1.15] mb-6" style="font-size: clamp(1.8rem, 3.4vw, 2.4rem);">
+        Tell us about the week you're planning.
+      </h2>
+      <p class="font-light leading-relaxed text-white/75 max-w-[40ch]">
+        Most retreat leaders, wedding planners and corporate organisers don't search by filters. They tell us about the group, the vibe, the dates — and we send three homes that fit. Usually within 24 hours.
+      </p>
+    </div>
+    <div>
+      <form class="space-y-5">
+        <div>
+          <label class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#a8a894] block mb-2">What for</label>
+          <select class="w-full bg-transparent border-b border-white/30 py-3 text-[0.95rem] text-white focus:outline-none focus:border-white">
+            <option class="bg-[#464543]">Retreat</option>
+            <option class="bg-[#464543]">Wedding</option>
+            <option class="bg-[#464543]">Corporate offsite</option>
+            <option class="bg-[#464543]">Milestone (birthday, anniversary)</option>
+            <option class="bg-[#464543]">Something else</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-5">
+          <div>
+            <label class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#a8a894] block mb-2">When</label>
+            <input type="text" placeholder="June 2026" class="w-full bg-transparent border-b border-white/30 py-3 text-[0.95rem] text-white placeholder-white/40 focus:outline-none focus:border-white" />
+          </div>
+          <div>
+            <label class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#a8a894] block mb-2">Group</label>
+            <input type="text" placeholder="14 guests" class="w-full bg-transparent border-b border-white/30 py-3 text-[0.95rem] text-white placeholder-white/40 focus:outline-none focus:border-white" />
+          </div>
+        </div>
+        <div>
+          <label class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#a8a894] block mb-2">Email</label>
+          <input type="email" placeholder="you@email.com" class="w-full bg-transparent border-b border-white/30 py-3 text-[0.95rem] text-white placeholder-white/40 focus:outline-none focus:border-white" />
+        </div>
+        <button type="button" class="w-full font-josefin uppercase tracking-[0.32em] text-[0.66rem] bg-white text-black py-4 hover:bg-[#d4d2c5] transition-colors mt-3">Send brief →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="px-8 py-12 bg-[#F6F6F6] text-[#5a5a5a] text-center border-t border-black/8">
+  <a href="homepage.html" class="font-heading italic text-xl text-[#1a1a1a]">nomadikas</a>
+  <p class="mt-4 font-josefin uppercase tracking-[0.3em] text-[0.55rem]">Search design prototype · v1 · <a href="index.html" class="border-b border-[#8c8c79] hover:text-black">back to index</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nomadikas — Homepage (no search)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #F6F6F6; color: #2D2D2D; }
+  .font-heading { font-family: 'Amiri', serif; }
+  .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+  .door { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .door:hover { transform: translateY(-6px); }
+  .door:hover .door-img { transform: scale(1.04); }
+  .door-img { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+</style>
+</head>
+<body>
+
+<!-- Sticky header -->
+<header class="fixed top-0 left-0 right-0 z-50 px-8 py-6 backdrop-blur-md bg-black/15 border-b border-white/10">
+  <div class="max-w-7xl mx-auto flex items-center justify-between text-white">
+    <a href="index.html" class="font-heading italic text-xl tracking-tight">nomadikas</a>
+    <nav class="hidden md:flex gap-10 font-josefin uppercase tracking-[0.28em] text-[0.62rem]">
+      <a href="homes.html" class="hover:text-[#d4d2c5] transition-colors">Homes</a>
+      <a href="venues.html" class="hover:text-[#d4d2c5] transition-colors">Venues</a>
+      <a href="#" class="hover:text-[#d4d2c5] transition-colors">Retreats</a>
+      <a href="#" class="hover:text-[#d4d2c5] transition-colors">Journal</a>
+    </nav>
+    <a href="#host" class="font-josefin uppercase tracking-[0.28em] text-[0.62rem] border border-white/40 px-5 py-2 hover:bg-white hover:text-black transition-colors">Host →</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="relative h-screen min-h-[680px] overflow-hidden">
+  <!-- Video background placeholder -->
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/15 to-black/55"></div>
+
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
+    <p class="font-josefin uppercase tracking-[0.42em] text-[0.6rem] mb-8 opacity-80">Architecture-led homes · curated retreats · venues for the few</p>
+    <h1 class="font-heading italic font-light leading-[1.05] mb-10" style="font-size: clamp(3rem, 6vw, 5.6rem);">
+      Wild escapes for the<br />
+      <em class="text-[#d4d2c5]">private few.</em>
+    </h1>
+    <div class="flex flex-wrap justify-center gap-6 font-josefin uppercase tracking-[0.32em] text-[0.62rem] opacity-85">
+      <a href="homes.html" class="hover:text-[#d4d2c5]">Find a villa</a>
+      <span class="opacity-50">·</span>
+      <a href="#retreat" class="hover:text-[#d4d2c5]">Attend a retreat</a>
+      <span class="opacity-50">·</span>
+      <a href="venues.html" class="hover:text-[#d4d2c5]">Host a retreat</a>
+    </div>
+  </div>
+
+  <!-- Subtle scroll cue -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/60 font-josefin uppercase tracking-[0.4em] text-[0.55rem]">
+    Scroll
+  </div>
+</section>
+
+<!-- Vision quote -->
+<section class="px-8 py-32 max-w-3xl mx-auto text-center">
+  <p class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#8c8c79] mb-8">Vision</p>
+  <p class="font-heading italic font-light leading-[1.3]" style="font-size: clamp(1.8rem, 3.2vw, 2.4rem); color: #2D2D2D;">
+    "I started Nomadikas because I couldn't find the homes I wanted to stay in. Architecture I'd seen in magazines, places where the host knows the chef, weeks where you don't have to explain what you need. So I built the list. Quietly."
+  </p>
+  <p class="mt-10 font-josefin uppercase tracking-[0.3em] text-[0.62rem] text-[#8c8c79]">— Darina · founder &amp; curator</p>
+</section>
+
+<!-- Three doors — the big idea -->
+<section class="px-8 pb-32">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#8c8c79] mb-5">Three ways in</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(2.2rem, 4vw, 3.2rem); max-width: 22ch; margin: 0 auto;">
+        Different reasons to come. Same level of care.
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Door 1 — Find a villa (rental, biggest revenue) -->
+      <a href="homes.html" class="door block relative aspect-[3/4] overflow-hidden bg-black">
+        <div class="door-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/70"></div>
+        <div class="relative z-10 h-full flex flex-col justify-end p-10 text-white">
+          <p class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-white/70 mb-3">For private renters</p>
+          <h3 class="font-heading italic font-light text-4xl mb-4">Find a villa.</h3>
+          <p class="font-light text-sm text-white/80 leading-relaxed mb-5 max-w-[28ch]">A week in a home you'd otherwise only see in a magazine. Yours, no other bookings on the land.</p>
+          <span class="font-josefin uppercase tracking-[0.3em] text-[0.6rem] border-b border-white/40 self-start pb-1">Browse homes →</span>
+        </div>
+      </a>
+
+      <!-- Door 2 — Attend a retreat (centered, larger photo emphasis, brand soul) -->
+      <a href="#retreat" class="door block relative aspect-[3/4] overflow-hidden bg-black md:scale-[1.04]">
+        <div class="door-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=1200&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/75"></div>
+        <div class="relative z-10 h-full flex flex-col justify-end p-10 text-white">
+          <p class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-white/70 mb-3">For retreat guests · The soul</p>
+          <h3 class="font-heading italic font-light text-4xl mb-4">Attend a retreat.</h3>
+          <p class="font-light text-sm text-white/80 leading-relaxed mb-5 max-w-[28ch]">A week with a host you trust, in a place that changes you. Yoga, breathwork, sobriety, writing.</p>
+          <span class="font-josefin uppercase tracking-[0.3em] text-[0.6rem] border-b border-white/40 self-start pb-1">See upcoming retreats →</span>
+        </div>
+      </a>
+
+      <!-- Door 3 — Host a retreat / venues -->
+      <a href="venues.html" class="door block relative aspect-[3/4] overflow-hidden bg-black">
+        <div class="door-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/70"></div>
+        <div class="relative z-10 h-full flex flex-col justify-end p-10 text-white">
+          <p class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-white/70 mb-3">For hosts &amp; events</p>
+          <h3 class="font-heading italic font-light text-4xl mb-4">Host a retreat.</h3>
+          <p class="font-light text-sm text-white/80 leading-relaxed mb-5 max-w-[28ch]">Buyout-only homes that hosted retreats before, with shala space, chef capacity, and a curator on call.</p>
+          <span class="font-josefin uppercase tracking-[0.3em] text-[0.6rem] border-b border-white/40 self-start pb-1">Find a venue →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <p class="mt-16 text-center text-sm font-light text-[#5a5a5a]">
+      Weddings, milestone events, corporate offsites — they live under <a href="venues.html" class="italic text-[#8c8c79] hover:text-black">Find a venue</a>.
+    </p>
+  </div>
+</section>
+
+<!-- The collection — small preview -->
+<section class="px-8 py-32 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#8c8c79] mb-5">The collection</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(2rem, 3.6vw, 2.8rem); max-width: 22ch; margin: 0 auto;">
+        Sixty-two homes. Roughly nine in ten properties don't make the list.
+      </h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="aspect-[3/4] bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg');"></div>
+      <div class="aspect-[3/4] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80');"></div>
+      <div class="aspect-[3/4] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80');"></div>
+      <div class="aspect-[3/4] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80');"></div>
+    </div>
+    <div class="text-center mt-12">
+      <a href="homes.html" class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#8c8c79] border-b border-[#8c8c79] pb-1 hover:text-black hover:border-black transition-colors">Browse all homes →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="px-8 py-12 bg-[#464543] text-white/70 text-center">
+  <a href="index.html" class="font-heading italic text-xl text-white/85">nomadikas</a>
+  <p class="mt-4 font-josefin uppercase tracking-[0.3em] text-[0.55rem]">Search design prototype · v1 · <a href="index.html" class="border-b border-white/30 hover:text-white">back to index</a></p>
+</footer>
+
+</body>
+</html>

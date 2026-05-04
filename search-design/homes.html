@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nomadikas — Homes</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #F6F6F6; color: #2D2D2D; }
+  .font-heading { font-family: 'Amiri', serif; }
+  .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+
+  /* The search bar */
+  .search-pill {
+    box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+  }
+  .search-segment {
+    transition: background-color 0.25s ease;
+  }
+  .search-segment:hover {
+    background-color: #faf8f3;
+  }
+  .search-segment.active {
+    background-color: #ffffff;
+  }
+  .chip {
+    transition: all 0.25s ease;
+  }
+  .chip:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+  }
+  .chip.active {
+    background-color: #1a1a1a;
+    color: #faf8f3;
+    border-color: #1a1a1a;
+  }
+  .card-photo {
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card:hover .card-photo {
+    transform: scale(1.04);
+  }
+</style>
+</head>
+<body>
+
+<!-- Sticky header with mini search -->
+<header class="sticky top-0 z-50 px-8 py-5 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
+    <a href="homepage.html" class="font-heading italic text-xl tracking-tight">nomadikas</a>
+
+    <!-- Mini search in header (collapsed state) -->
+    <div class="hidden md:flex items-center divide-x divide-black/10 border border-black/12 rounded-full bg-white text-[0.78rem] px-1 py-1 hover:shadow-md transition-shadow cursor-pointer">
+      <span class="px-4 py-1.5">Anywhere</span>
+      <span class="px-4 py-1.5 text-[#5a5a5a]">Any week</span>
+      <span class="px-4 py-1.5 text-[#5a5a5a]">Add guests</span>
+      <span class="bg-[#1a1a1a] text-white rounded-full w-7 h-7 flex items-center justify-center">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </span>
+    </div>
+
+    <nav class="hidden md:flex gap-8 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a]">
+      <a href="homes.html" class="text-black border-b border-black pb-0.5">Homes</a>
+      <a href="venues.html" class="hover:text-black transition-colors">Venues</a>
+      <a href="#" class="hover:text-black transition-colors">Retreats</a>
+    </nav>
+
+    <a href="#concierge" class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] border border-black/30 px-4 py-2 hover:bg-black hover:text-white transition-colors">Speak to a curator</a>
+  </div>
+</header>
+
+<!-- Hero with the BIG search bar -->
+<section class="relative h-[640px] overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/15 to-black/55"></div>
+
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
+    <p class="font-josefin uppercase tracking-[0.42em] text-[0.6rem] mb-6 opacity-80">Sixty-two homes · twelve countries</p>
+    <h1 class="font-heading italic font-light leading-[1.05] mb-12" style="font-size: clamp(2.6rem, 5.5vw, 4.6rem);">
+      A week in a home<br />
+      worth the <em class="text-[#d4d2c5]">flight.</em>
+    </h1>
+
+    <!-- THE SEARCH BAR — Airbnb-inspired pill, editorial restraint -->
+    <div class="search-pill bg-white rounded-full flex items-stretch divide-x divide-black/8 w-full max-w-[920px]">
+      <button class="search-segment active flex-1 px-7 py-5 text-left rounded-l-full">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Where</div>
+        <div class="text-[0.92rem] text-[#1a1a1a]">Anywhere</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Check in</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">Add dates</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Check out</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">Add dates</div>
+      </button>
+      <button class="search-segment flex-1 px-7 py-5 text-left">
+        <div class="font-josefin uppercase text-[0.58rem] tracking-[0.28em] text-[#8c8c79] mb-1.5">Who</div>
+        <div class="text-[0.92rem] text-[#5a5a5a]">Add guests</div>
+      </button>
+      <div class="flex items-center pr-2">
+        <button class="bg-[#1a1a1a] text-[#faf8f3] rounded-full px-7 py-4 hover:bg-[#8c8c79] transition-colors flex items-center gap-2.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <span class="font-josefin uppercase tracking-[0.28em] text-[0.66rem]">Search</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Or browse by... -->
+    <div class="mt-8 flex flex-wrap justify-center gap-2.5">
+      <span class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-white/60 self-center mr-2">Or browse by</span>
+      <a href="#" class="chip border border-white/40 text-white px-4 py-1.5 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Architectural</a>
+      <a href="#" class="chip border border-white/40 text-white px-4 py-1.5 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Beachfront</a>
+      <a href="#" class="chip border border-white/40 text-white px-4 py-1.5 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Vineyard</a>
+      <a href="#" class="chip border border-white/40 text-white px-4 py-1.5 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Mountains</a>
+      <a href="#" class="chip border border-white/40 text-white px-4 py-1.5 rounded-full text-[0.78rem] backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black">Sleeps 8+</a>
+    </div>
+  </div>
+</section>
+
+<!-- Filter chips (sticky-ish below hero) -->
+<section class="px-8 py-8 bg-[#F6F6F6] border-b border-black/8">
+  <div class="max-w-7xl mx-auto flex items-center gap-3 overflow-x-auto whitespace-nowrap">
+    <span class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mr-3 flex-shrink-0">Refine</span>
+    <button class="chip active border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">All</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Architectural</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Pool</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Sleeps 8+</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Sleeps 16+</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Yoga shala</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Chef on call</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Beachfront</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">Pet-friendly</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">€2k–€5k / night</button>
+    <button class="chip border border-black/15 px-4 py-2 rounded-full text-[0.78rem]">€5k+ / night</button>
+    <span class="ml-auto flex-shrink-0 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a]">62 homes</span>
+  </div>
+</section>
+
+<!-- Results grid -->
+<section class="px-8 py-16">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Editorial intro -->
+    <div class="mb-12 max-w-2xl">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-3">All homes</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(1.6rem, 2.6vw, 2rem);">
+        Sixty-two homes. Each one passes the goosebump check.
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-14">
+
+      <!-- Card 1 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2025/12/Flores-1.jpg');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Melides · Portugal</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Estate Fonte das Perdizes</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 22 · 11 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €4,800 / night</span>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=900&q=80');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Comporta · Portugal</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Casa Joana</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 10 · 5 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €2,400 / night</span>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=80');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Patmos · Greece</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">The Greek House</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 12 · 6 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €3,200 / night</span>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=900&q=80');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Kalkan · Turkey</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Villa Karya</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 14 · 7 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €2,800 / night</span>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900&q=80');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Mallorca · Spain</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Casa de los Sueños</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 16 · 8 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €5,400 / night</span>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="#" class="card group block">
+        <div class="aspect-[4/5] overflow-hidden mb-4 bg-black">
+          <div class="card-photo w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1613553497126-a44624272024?w=900&q=80');"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mb-2">Marbella · Spain</p>
+        <h3 class="font-heading italic text-xl mb-3 group-hover:text-[#8c8c79] transition-colors">Villa Tres Almas</h3>
+        <div class="flex items-center justify-between text-[0.78rem] text-[#5a5a5a]">
+          <span>Sleeps 18 · 9 bedrooms</span>
+          <span class="text-[#1a1a1a]">From €6,200 / night</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="mt-20 text-center">
+      <button class="font-josefin uppercase tracking-[0.32em] text-[0.66rem] border border-black/30 px-10 py-4 hover:bg-black hover:text-white transition-colors">Show more homes</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Concierge strip -->
+<section id="concierge" class="px-8 py-24 bg-[#464543] text-white/85">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.68rem] text-[#a8a894] mb-6">Or skip the search</p>
+    <h2 class="font-heading italic font-light leading-[1.15] mb-8" style="font-size: clamp(1.8rem, 3.4vw, 2.4rem);">
+      Tell us what you're looking for. We'll send three homes that fit, by tomorrow.
+    </h2>
+    <a href="#" class="inline-block font-josefin uppercase tracking-[0.32em] text-[0.66rem] border border-white/40 px-10 py-4 hover:bg-white hover:text-black transition-colors">Speak to a curator →</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="px-8 py-12 bg-[#F6F6F6] text-[#5a5a5a] text-center border-t border-black/8">
+  <a href="homepage.html" class="font-heading italic text-xl text-[#1a1a1a]">nomadikas</a>
+  <p class="mt-4 font-josefin uppercase tracking-[0.3em] text-[0.55rem]">Search design prototype · v1 · <a href="index.html" class="border-b border-[#8c8c79] hover:text-black">back to index</a></p>
+</footer>
+
+</body>
+</html>
