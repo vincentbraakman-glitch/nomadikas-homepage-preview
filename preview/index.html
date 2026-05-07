@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>S2W Post Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #0D1B2A; color: #E5E7EB; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; min-height: 100vh; height: 100%; }
+  body { display: flex; flex-direction: column; align-items: center; padding: 16px 8px 40px; gap: 12px; }
+  .top { width: 100%; max-width: 480px; padding: 0 8px; }
+  h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+  .meta { font-size: 12px; color: #94A3B8; margin-top: 4px; }
+  .music { font-size: 13px; color: #C9A96E; margin-top: 8px; padding: 8px 12px; background: rgba(201, 169, 110, 0.08); border: 1px solid rgba(201, 169, 110, 0.25); border-radius: 8px; display: flex; align-items: center; gap: 8px; }
+  .music.unavailable { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
+  .tabs { display: flex; gap: 6px; width: 100%; max-width: 480px; padding: 0 8px; }
+  .tab { flex: 1; padding: 10px 8px; background: #1E293B; border: 1px solid #334155; color: #CBD5E1; border-radius: 10px; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; }
+  .tab.active { background: #C9A96E; border-color: #C9A96E; color: #0D1B2A; font-weight: 600; }
+  .phone-wrap { display: flex; justify-content: center; width: 100%; flex: 1; min-height: 0; }
+  .phone { position: relative; background: #000; border-radius: 36px; padding: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.4), inset 0 0 0 1.5px #1f2937; }
+  .phone.aspect-4x5 .screen { aspect-ratio: 4 / 5; }
+  .phone.aspect-9x16 .screen { aspect-ratio: 9 / 16; }
+  .screen { position: relative; background: #000; border-radius: 28px; overflow: hidden; width: 320px; }
+  @media (min-width: 720px) { .screen { width: 380px; } }
+  .progress { position: absolute; top: 8px; left: 8px; right: 8px; height: 3px; display: flex; gap: 4px; z-index: 5; }
+  .progress .bar { flex: 1; background: rgba(255,255,255,0.25); border-radius: 2px; overflow: hidden; }
+  .progress .bar.done { background: rgba(255,255,255,0.95); }
+  .progress .bar .fill { width: 0%; height: 100%; background: rgba(255,255,255,0.95); transition: width linear 50ms; }
+  .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; align-items: center; justify-content: center; background: #000; }
+  .slide.active { display: flex; }
+  .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .nav-zones { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; z-index: 4; }
+  .nav-zones .zone { flex: 1; cursor: pointer; }
+  .badge { position: absolute; bottom: 12px; left: 12px; right: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 2px rgba(0,0,0,0.5); z-index: 3; pointer-events: none; }
+  .badge .left { display: flex; gap: 6px; align-items: center; }
+  .pill { background: rgba(0,0,0,0.55); padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+  .controls { display: flex; gap: 8px; width: 100%; max-width: 480px; padding: 0 8px; align-items: center; flex-wrap: wrap; }
+  .btn { padding: 8px 14px; background: #1E293B; border: 1px solid #334155; color: #CBD5E1; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .btn:hover { background: #334155; }
+  .btn.primary { background: #C9A96E; color: #0D1B2A; border-color: #C9A96E; font-weight: 600; }
+  .caption { width: 100%; max-width: 480px; padding: 12px; background: #1E293B; border: 1px solid #334155; border-radius: 10px; font-size: 13px; line-height: 1.55; white-space: pre-wrap; color: #CBD5E1; max-height: 200px; overflow: auto; }
+  .caption-label { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .error { color: #fecaca; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.4); border-radius: 8px; max-width: 480px; }
+  audio { display: none; }
+  .footer { font-size: 11px; color: #64748B; text-align: center; max-width: 480px; padding: 0 8px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <h1 id="title">Loading…</h1>
+  <div class="meta" id="meta"></div>
+  <div class="music" id="music">🎵 Searching for music…</div>
+</div>
+<div class="tabs">
+  <button class="tab active" data-set="carousel">Carousel</button>
+  <button class="tab" data-set="stories_a">Stories A</button>
+  <button class="tab" data-set="stories_b">Stories B</button>
+</div>
+<div class="phone-wrap">
+  <div class="phone aspect-4x5" id="phone">
+    <div class="screen" id="screen">
+      <div class="progress" id="progress"></div>
+      <div id="slides"></div>
+      <div class="nav-zones">
+        <div class="zone" id="prevZone"></div>
+        <div class="zone" id="nextZone"></div>
+      </div>
+      <div class="badge"><div class="left"><span class="pill" id="badgeIdx">1/8</span></div><div class="pill" id="badgeKind">Carousel</div></div>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <button class="btn primary" id="playBtn">▶ Play</button>
+  <button class="btn" id="prevBtn">←</button>
+  <button class="btn" id="nextBtn">→</button>
+  <button class="btn" id="restartBtn">↺ Restart</button>
+  <span style="font-size:12px;color:#94A3B8;margin-left:auto" id="status">Tap right edge to advance</span>
+</div>
+<div id="captionWrap"></div>
+<audio id="audio" loop></audio>
+<div class="footer">Preview is a simulation. Music is a 30-sec iTunes preview. Final post via Instagram app.</div>
+<script>
+(async () => {
+  const params = new URLSearchParams(location.search);
+  const postId = params.get('post');
+  if (!postId) {
+    document.body.innerHTML = '<div class="error">Missing <code>?post=&lt;post-id&gt;</code> URL parameter.</div>';
+    return;
+  }
+
+  let manifest;
+  try {
+    const r = await fetch('manifests/' + postId + '.json?cb=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    manifest = await r.json();
+  } catch (e) {
+    document.body.innerHTML = '<div class="error">Failed to load manifest for <code>' + postId + '</code>: ' + e.message + '</div>';
+    return;
+  }
+
+  document.getElementById('title').textContent = manifest.title || postId;
+  document.getElementById('meta').textContent = postId;
+
+  // Music: iTunes Search API
+  const audioEl = document.getElementById('audio');
+  const musicEl = document.getElementById('music');
+  if (manifest.audio_track && manifest.audio_track.name) {
+    const q = encodeURIComponent((manifest.audio_track.artist || '') + ' ' + manifest.audio_track.name);
+    try {
+      const r = await fetch('https://itunes.apple.com/search?term=' + q + '&media=music&limit=1');
+      const j = await r.json();
+      const t = j.results && j.results[0];
+      if (t && t.previewUrl) {
+        audioEl.src = t.previewUrl;
+        musicEl.innerHTML = '🎵 <strong>' + (manifest.audio_track.name) + '</strong> — ' + (manifest.audio_track.artist || '') + ' <span style="color:#94A3B8;margin-left:auto;font-size:11px">(30-sec preview)</span>';
+      } else {
+        musicEl.classList.add('unavailable');
+        musicEl.textContent = '⚠ Music preview not found on iTunes for: ' + manifest.audio_track.name;
+      }
+    } catch (e) {
+      musicEl.classList.add('unavailable');
+      musicEl.textContent = '⚠ Could not load music preview: ' + e.message;
+    }
+  } else {
+    musicEl.style.display = 'none';
+  }
+
+  // State
+  let activeSet = 'carousel';
+  let currentIdx = 0;
+  let playing = false;
+  let timer = null;
+  let progressTimer = null;
+
+  function getSlides() { return (manifest[activeSet] && manifest[activeSet].slides) || []; }
+  function getAspect() { return (manifest[activeSet] && manifest[activeSet].aspect) || '4:5'; }
+
+  function render() {
+    const phone = document.getElementById('phone');
+    const aspect = getAspect();
+    phone.classList.toggle('aspect-4x5', aspect === '4:5');
+    phone.classList.toggle('aspect-9x16', aspect === '9:16');
+
+    const slidesEl = document.getElementById('slides');
+    const slides = getSlides();
+    slidesEl.innerHTML = '';
+    slides.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'slide' + (i === currentIdx ? ' active' : '');
+      div.dataset.idx = i;
+      const isVideo = /\.(mp4|mov)$/i.test(s.url);
+      if (isVideo) {
+        const v = document.createElement('video');
+        v.src = s.url; v.muted = true; v.playsInline = true; v.preload = 'metadata';
+        div.appendChild(v);
+      } else {
+        const img = document.createElement('img');
+        img.src = s.url; img.loading = 'lazy';
+        div.appendChild(img);
+      }
+      slidesEl.appendChild(div);
+    });
+
+    // Progress bars
+    const progressEl = document.getElementById('progress');
+    progressEl.innerHTML = '';
+    slides.forEach((_, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'bar' + (i < currentIdx ? ' done' : '');
+      const fill = document.createElement('div');
+      fill.className = 'fill';
+      fill.style.width = i < currentIdx ? '100%' : '0%';
+      bar.appendChild(fill);
+      progressEl.appendChild(bar);
+    });
+
+    const setLabel = activeSet === 'carousel' ? 'Carousel' : (activeSet === 'stories_a' ? 'Stories A' : 'Stories B');
+    document.getElementById('badgeKind').textContent = setLabel;
+    document.getElementById('badgeIdx').textContent = (currentIdx + 1) + '/' + slides.length;
+
+    // Captions
+    const captionWrap = document.getElementById('captionWrap');
+    captionWrap.innerHTML = '';
+    if (manifest.captions) {
+      const ig = manifest.captions.ig || manifest.captions.instagram;
+      if (ig) {
+        const d = document.createElement('div');
+        d.className = 'caption';
+        d.innerHTML = '<div class="caption-label">📷 Instagram caption</div>' + escapeHtml(ig);
+        captionWrap.appendChild(d);
+      }
+    }
+
+    // Activate current slide video
+    const active = slidesEl.querySelector('.slide.active');
+    if (active) {
+      const v = active.querySelector('video');
+      if (v) {
+        v.currentTime = 0;
+        if (playing) v.play().catch(() => {});
+      }
+    }
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function go(delta) {
+    const slides = getSlides();
+    if (!slides.length) return;
+    currentIdx = (currentIdx + delta + slides.length) % slides.length;
+    render();
+    if (playing) startSlideTimer();
+  }
+
+  function jumpTo(idx) { currentIdx = idx; render(); if (playing) startSlideTimer(); }
+  function setActiveSet(s) { activeSet = s; currentIdx = 0; document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.set === s)); render(); if (playing) startSlideTimer(); }
+
+  function clearTimers() { if (timer) clearTimeout(timer); if (progressTimer) clearInterval(progressTimer); timer = null; progressTimer = null; }
+
+  function startSlideTimer() {
+    clearTimers();
+    const slides = getSlides();
+    const cur = slides[currentIdx];
+    if (!cur) return;
+    const isVideo = /\.(mp4|mov)$/i.test(cur.url);
+
+    let duration;
+    if (isVideo) {
+      const v = document.querySelector('.slide.active video');
+      duration = (v && v.duration && isFinite(v.duration)) ? v.duration * 1000 : 5000;
+    } else {
+      duration = activeSet === 'carousel' ? 3500 : 5000;
+    }
+
+    // Animate progress bar
+    const fill = document.querySelector('.progress .bar:nth-child(' + (currentIdx + 1) + ') .fill');
+    let start = Date.now();
+    progressTimer = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const pct = Math.min(100, (elapsed / duration) * 100);
+      if (fill) fill.style.width = pct + '%';
+      if (elapsed >= duration) clearInterval(progressTimer);
+    }, 50);
+
+    timer = setTimeout(() => {
+      const slides = getSlides();
+      if (currentIdx < slides.length - 1) go(1);
+      else { playing = false; document.getElementById('playBtn').textContent = '▶ Play'; document.getElementById('status').textContent = 'End of sequence'; audioEl.pause(); }
+    }, duration);
+  }
+
+  function play() {
+    playing = true;
+    document.getElementById('playBtn').textContent = '⏸ Pause';
+    document.getElementById('status').textContent = 'Playing… (tap right edge to skip)';
+    audioEl.play().catch(() => { document.getElementById('status').textContent = 'Audio blocked — click Play again or unmute'; });
+    const v = document.querySelector('.slide.active video');
+    if (v) v.play().catch(() => {});
+    startSlideTimer();
+  }
+
+  function pause() {
+    playing = false;
+    document.getElementById('playBtn').textContent = '▶ Play';
+    document.getElementById('status').textContent = 'Paused';
+    clearTimers();
+    audioEl.pause();
+    const v = document.querySelector('.slide.active video');
+    if (v) v.pause();
+  }
+
+  document.getElementById('playBtn').addEventListener('click', () => { playing ? pause() : play(); });
+  document.getElementById('prevBtn').addEventListener('click', () => go(-1));
+  document.getElementById('nextBtn').addEventListener('click', () => go(1));
+  document.getElementById('restartBtn').addEventListener('click', () => { jumpTo(0); if (!playing) play(); });
+  document.getElementById('prevZone').addEventListener('click', () => go(-1));
+  document.getElementById('nextZone').addEventListener('click', () => go(1));
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setActiveSet(t.dataset.set)));
+
+  // Hide tabs that have no slides
+  ['carousel', 'stories_a', 'stories_b'].forEach(k => {
+    const set = manifest[k];
+    if (!set || !set.slides || !set.slides.length) {
+      const tab = document.querySelector('.tab[data-set="' + k + '"]');
+      if (tab) tab.style.display = 'none';
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
