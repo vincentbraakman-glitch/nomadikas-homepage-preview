@@ -181,16 +181,27 @@
     document.getElementById('badgeKind').textContent = setLabel;
     document.getElementById('badgeIdx').textContent = (currentIdx + 1) + '/' + slides.length;
 
-    // Captions
+    // Captions — IG (with hashtags appended), FB if present
     const captionWrap = document.getElementById('captionWrap');
     captionWrap.innerHTML = '';
     if (manifest.captions) {
       const ig = manifest.captions.ig || manifest.captions.instagram;
+      const fb = manifest.captions.fb || manifest.captions.facebook;
+      const tags = manifest.hashtags || '';
       if (ig) {
         const d = document.createElement('div');
         d.className = 'caption';
-        d.innerHTML = '<div class="caption-label">📷 Instagram caption</div>' + escapeHtml(ig);
+        const fullIg = tags ? (ig + '\n\n' + tags) : ig;
+        d.innerHTML = '<div class="caption-label">📷 Instagram caption (tap-and-hold to copy)</div>' + escapeHtml(fullIg);
         captionWrap.appendChild(d);
+      }
+      if (fb && fb !== ig) {
+        const d2 = document.createElement('div');
+        d2.className = 'caption';
+        d2.style.marginTop = '8px';
+        const fullFb = tags ? (fb + '\n\n' + tags) : fb;
+        d2.innerHTML = '<div class="caption-label">🟦 Facebook caption</div>' + escapeHtml(fullFb);
+        captionWrap.appendChild(d2);
       }
     }
 
