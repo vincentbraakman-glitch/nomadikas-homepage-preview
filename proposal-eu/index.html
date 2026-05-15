@@ -14,69 +14,40 @@
   .font-heading { font-family: 'Amiri', serif; }
   .font-josefin { font-family: 'Josefin Sans', sans-serif; }
 
-  /* Country card hover — slow, restrained */
   .country-card .photo { transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .country-card:hover .photo { transform: scale(1.03); }
   .country-card .underline { transition: all 0.4s ease; }
   .country-card:hover .underline { color: #1a1a1a; border-color: #1a1a1a; }
 
-  /* ════════ MAP STYLING — warm cream blend with page ════════ */
-  #map { width: 100%; height: 100%; min-height: 520px; background: #ece8de; }
-  .leaflet-container {
-    background: #ece8de !important;
-    font-family: 'Montserrat', sans-serif;
-  }
-  /* Apply warm cream filter to map tiles so it blends with the page palette */
-  .leaflet-tile-pane {
-    filter: sepia(0.35) saturate(0.55) hue-rotate(-8deg) brightness(1.04) contrast(0.92);
-    opacity: 0.85;
-  }
-  /* Hide zoom + attribution for cleaner editorial feel */
+  /* MAP — keep colours readable, light filter only to soften */
+  #map { width: 100%; height: 100%; min-height: 520px; background: #d8e2ec; }
+  .leaflet-container { background: #d8e2ec !important; font-family: 'Montserrat', sans-serif; }
+  .leaflet-tile-pane { filter: saturate(0.92) brightness(0.98); }
   .leaflet-control-zoom { display: none; }
   .leaflet-control-attribution { display: none; }
 
-  /* ════════ CUSTOM MAP PINS — pulse animation ════════ */
+  /* Pulse pins */
   @keyframes pin-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(70, 69, 67, 0.55), 0 0 0 0 rgba(140, 140, 121, 0.4); }
-    50%      { box-shadow: 0 0 0 14px rgba(70, 69, 67, 0), 0 0 0 22px rgba(140, 140, 121, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.55), 0 0 0 0 rgba(140, 140, 121, 0.45); }
+    50%      { box-shadow: 0 0 0 16px rgba(26, 26, 26, 0), 0 0 0 26px rgba(140, 140, 121, 0); }
   }
   .nomadikas-pin {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    border: 2px solid #faf8f3;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #1a1a1a; border: 3px solid #faf8f3;
     cursor: pointer;
     animation: pin-pulse 2.6s ease-in-out infinite;
     transition: transform 0.4s ease;
   }
-  .nomadikas-pin-wrap {
-    position: relative;
-    width: 14px;
-    height: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .nomadikas-pin-wrap { position: relative; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
   .nomadikas-pin-wrap:hover .nomadikas-pin { transform: scale(1.5); }
   .nomadikas-pin-label {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 10px;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: #1a1a1a;
-    white-space: nowrap;
-    pointer-events: none;
-    background: rgba(250, 248, 243, 0.85);
-    padding: 3px 8px;
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    margin-top: 12px; font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase; color: #1a1a1a;
+    white-space: nowrap; pointer-events: none;
+    background: rgba(250, 248, 243, 0.92); padding: 4px 9px;
   }
 
-  /* Leaflet popup */
   .leaflet-popup-content-wrapper { border-radius: 0; box-shadow: 0 16px 44px rgba(0,0,0,0.18); padding: 0; }
   .leaflet-popup-content { margin: 0; padding: 14px 20px; }
   .leaflet-popup-content a { color: #1a1a1a; text-decoration: none; display: block; font-family: 'Amiri', serif; font-style: italic; font-size: 1.05rem; }
@@ -87,15 +58,13 @@
 </head>
 <body>
 
-<!-- Sticky header -->
-<header class="sticky top-0 z-50 px-8 py-5 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
+<header class="sticky top-0 z-50 px-8 py-4 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <div class="font-heading italic text-xl tracking-tight">nomadikas</div>
+    <a href="index.html" class="block"><img src="https://nomadikas.com/wp-content/uploads/2025/01/cropped-cropped-Untitled-design-1-300x75.webp" alt="Nomadikas" class="h-8 md:h-9" /></a>
     <p class="hidden md:block font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-[#8c8c79]">A private selection · prepared by Darina</p>
   </div>
 </header>
 
-<!-- Hero -->
 <section class="px-6 pt-28 pb-20 max-w-4xl mx-auto text-center">
   <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-8">Three countries · five homes</p>
   <h1 class="font-heading italic font-light leading-[1.05] mb-10" style="font-size: clamp(2.8rem, 5.5vw, 4.6rem);">
@@ -107,12 +76,11 @@
   </p>
 </section>
 
-<!-- Map + country cards -->
 <section class="px-6 pb-24">
   <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16">
 
     <div class="lg:sticky lg:top-28 lg:self-start">
-      <div class="aspect-[4/5] lg:aspect-auto lg:h-[620px] bg-[#ece8de] overflow-hidden">
+      <div class="aspect-[4/5] lg:aspect-auto lg:h-[620px] bg-[#d8e2ec] overflow-hidden">
         <div id="map"></div>
       </div>
       <p class="mt-4 font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#888]">Mediterranean &amp; Iberia · click a pin to step in</p>
@@ -161,11 +129,10 @@
 </section>
 
 <footer class="px-8 py-10 text-center bg-[#F6F6F6] border-t border-black/8">
-  <p class="font-heading italic text-lg mb-2">nomadikas</p>
+  <img src="https://nomadikas.com/wp-content/uploads/2025/01/cropped-cropped-Untitled-design-1-300x75.webp" alt="Nomadikas" class="h-7 mx-auto mb-3 opacity-75" />
   <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#8c8c79]">A private proposal · five homes · three countries</p>
 </footer>
 
-<!-- Favourites tray (shows up if she returns to overview after saving on a country page) -->
 <div id="fav-tray" class="fixed bottom-6 right-6 z-40 bg-white shadow-2xl border border-black/15 px-6 py-5 max-w-[320px] transition-all duration-500" style="transform: translateY(160%);">
   <div class="flex items-center justify-between mb-3">
     <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#8c8c79]">Your shortlist · <span id="fav-count">0</span></p>
@@ -183,32 +150,18 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ════════ MAP ════════
-const map = L.map('map', {
-  zoomControl: false,
-  scrollWheelZoom: false,
-  doubleClickZoom: false,
-  boxZoom: false,
-  keyboard: false,
-  attributionControl: false
-});
-
-// CartoDB Voyager — warm cream/sand tones that blend with the brand palette
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
-  maxZoom: 9,
-  minZoom: 4,
-  subdomains: 'abcd'
-}).addTo(map);
+const map = L.map('map', { zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, attributionControl: false });
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 9, minZoom: 4, subdomains: 'abcd' }).addTo(map);
 
 const countries = [
-  { name: 'Greece',   sub: 'Zakynthos',         coords: [37.78, 20.89], page: 'greece.html'   },
+  { name: 'Greece',   sub: 'Zakynthos',           coords: [37.78, 20.89], page: 'greece.html'   },
   { name: 'Portugal', sub: 'Comporta · Alentejo', coords: [38.13, -8.79], page: 'portugal.html' },
-  { name: 'Spain',    sub: 'Menorca',           coords: [39.95,  4.07], page: 'spain.html'    }
+  { name: 'Spain',    sub: 'Menorca',             coords: [39.95,  4.07], page: 'spain.html'    }
 ];
 
 countries.forEach(c => {
   const html = `<div class="nomadikas-pin-wrap"><div class="nomadikas-pin"></div><span class="nomadikas-pin-label">${c.name}</span></div>`;
-  const icon = L.divIcon({ html, className: '', iconSize: [14, 14], iconAnchor: [7, 7] });
+  const icon = L.divIcon({ html, className: '', iconSize: [16, 16], iconAnchor: [8, 8] });
   const marker = L.marker(c.coords, { icon }).addTo(map);
   marker.bindPopup(`<a href="${c.page}"><em>${c.name}</em><small>${c.sub} →</small></a>`, { closeButton: false, offset: [0, -10] });
   marker.on('click', () => marker.openPopup());
@@ -217,12 +170,8 @@ countries.forEach(c => {
 
 const bounds = L.latLngBounds(countries.map(c => c.coords));
 map.fitBounds(bounds, { padding: [90, 90] });
+window.addEventListener('resize', () => { setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [90, 90] }); }, 100); });
 
-window.addEventListener('resize', () => {
-  setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [90, 90] }); }, 100);
-});
-
-// ════════ FAVOURITES (mirrors country pages) ════════
 const ALL_VENUES = {
   zakynthos:  { name: "Beachfront Villa Zakynthos", country: "Greece",   page: "greece.html"   },
   casaNoor:   { name: "Casa Noor",                  country: "Portugal", page: "portugal.html" },
@@ -230,31 +179,17 @@ const ALL_VENUES = {
   santaPrima: { name: "Santa Prima",                country: "Spain",    page: "spain.html"    },
   esBec:      { name: "Es Bec d'Aguila",            country: "Spain",    page: "spain.html"    }
 };
-
 const FAV_KEY = 'nomadikas-proposal-favs';
 function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch { return []; } }
 function setFavs(list) { localStorage.setItem(FAV_KEY, JSON.stringify(list)); updateFavUI(); }
 function clearFavs() { setFavs([]); }
-function copyFavs() {
-  const favs = getFavs();
-  if (favs.length === 0) return;
-  const names = favs.map(k => ALL_VENUES[k]?.name + ' (' + ALL_VENUES[k]?.country + ')').join('\n- ');
-  navigator.clipboard.writeText('My shortlist:\n- ' + names).then(() => {
-    const s = document.getElementById('copy-status');
-    s.style.opacity = '1';
-    setTimeout(() => s.style.opacity = '0', 2000);
-  });
-}
+function copyFavs() { const favs = getFavs(); if (favs.length === 0) return; const names = favs.map(k => ALL_VENUES[k]?.name + ' (' + ALL_VENUES[k]?.country + ')').join('\n- '); navigator.clipboard.writeText('My shortlist:\n- ' + names).then(() => { const s = document.getElementById('copy-status'); s.style.opacity = '1'; setTimeout(() => s.style.opacity = '0', 2000); }); }
 function updateFavUI() {
   const favs = getFavs();
-  const tray = document.getElementById('fav-tray');
-  const count = favs.length;
+  const tray = document.getElementById('fav-tray'); const count = favs.length;
   tray.style.transform = count > 0 ? 'translateY(0)' : 'translateY(160%)';
   document.getElementById('fav-count').textContent = count;
-  document.getElementById('fav-list').innerHTML = favs.map(k => {
-    const v = ALL_VENUES[k];
-    return `<li class="flex items-start justify-between gap-2"><span>· ${v.name}</span><span class="text-[0.65rem] text-[#888]">${v.country}</span></li>`;
-  }).join('');
+  document.getElementById('fav-list').innerHTML = favs.map(k => { const v = ALL_VENUES[k]; return `<li class="flex items-start justify-between gap-2"><span>· ${v.name}</span><span class="text-[0.65rem] text-[#888]">${v.country}</span></li>`; }).join('');
   const names = favs.map(k => '- ' + ALL_VENUES[k].name + ' (' + ALL_VENUES[k].country + ')').join('\n');
   document.getElementById('fav-mailto').href = 'mailto:darina@nomadikas.com?subject=' + encodeURIComponent('My shortlist from the private selection') + '&body=' + encodeURIComponent('Hi Darina,\n\nThese are the homes I keep coming back to:\n\n' + names + '\n\nWhen could we set up a call to talk through dates?\n\nThank you.');
 }
