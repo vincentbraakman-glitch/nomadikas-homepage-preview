@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A retreat for Maya — Nomadikas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #F6F6F6; color: #2D2D2D; overflow-x: hidden; }
+  .font-heading { font-family: 'Amiri', serif; }
+  .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+
+  /* Sections fade-in on activation */
+  .stage { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; pointer-events: none; max-height: 0; overflow: hidden; }
+  .stage.active { opacity: 1; transform: translateY(0); pointer-events: auto; max-height: none; }
+
+  /* Choice cards */
+  .choice {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .choice:hover {
+    border-color: #1a1a1a;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  }
+  .choice.selected {
+    background: #1a1a1a;
+    color: #faf8f3;
+    border-color: #1a1a1a;
+  }
+  .choice.selected .choice-eyebrow { color: #d4d2c5; }
+
+  /* Progress dots */
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.18); transition: all 0.3s ease; }
+  .dot.done { background: #1a1a1a; width: 22px; border-radius: 3px; }
+  .dot.current { background: #8c8c79; width: 22px; border-radius: 3px; }
+
+  /* Image reveal */
+  .photo { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+  .photo-wrap:hover .photo { transform: scale(1.04); }
+
+  /* Match reveal — slow elegant fade */
+  @keyframes matchIn {
+    0% { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+  .match-reveal { animation: matchIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* Loading dots */
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .pulse-dot { animation: pulse 1.4s ease-in-out infinite; }
+  .pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+  .pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Hide scroll bar on body during journey but allow scroll */
+  body { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- Sticky progress header -->
+<header class="fixed top-0 left-0 right-0 z-50 px-8 py-5 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div class="font-heading italic text-xl tracking-tight">nomadikas</div>
+    <div class="hidden md:flex items-center gap-2.5" id="progress">
+      <span class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#8c8c79] mr-3">Your journey</span>
+      <span class="dot done" data-step="0"></span>
+      <span class="dot" data-step="1"></span>
+      <span class="dot" data-step="2"></span>
+      <span class="dot" data-step="3"></span>
+      <span class="dot" data-step="4"></span>
+    </div>
+    <button onclick="restart()" class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a] hover:text-black transition-colors" id="restartBtn" style="visibility:hidden;">Start over</button>
+  </div>
+</header>
+
+<!-- ════════════════ STAGE 0 — WELCOME ════════════════ -->
+<section id="stage-0" class="stage active min-h-screen flex items-center justify-center px-6 pt-20">
+  <div class="max-w-2xl text-center">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-8">A private proposal · prepared by Darina</p>
+    <h1 class="font-heading italic font-light leading-[1.1] mb-10" style="font-size: clamp(2.6rem, 5.2vw, 4.4rem);">
+      Hi <em class="text-[#8c8c79]">Maya</em>,<br />
+      let's find your week.
+    </h1>
+    <p class="font-light leading-relaxed text-[#5a5a5a] mb-12 max-w-[44ch] mx-auto">
+      Three architecturally extraordinary estates in Indonesia. One of them is yours. Three quick questions and we'll know which.
+    </p>
+    <button onclick="advance(1)" class="bg-[#1a1a1a] text-[#faf8f3] px-12 py-5 font-josefin uppercase tracking-[0.32em] text-[0.7rem] hover:bg-[#8c8c79] transition-colors">
+      Begin →
+    </button>
+    <p class="mt-8 text-[#888]"><a href="#" onclick="event.preventDefault(); skipToBrowse();" class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#5a5a5a] border-b border-[#8c8c79] hover:text-black">Or browse all three →</a></p>
+  </div>
+</section>
+
+<!-- ════════════════ STAGE 1 — GROUP SIZE ════════════════ -->
+<section id="stage-1" class="stage min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+  <div class="max-w-4xl w-full">
+    <div class="text-center mb-12">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Question 1 of 3</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(2rem, 4vw, 3rem);">
+        How big is your group?
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+      <button class="choice py-12 px-8 text-center" onclick="answer('size', 'small', 1)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">Intimate</p>
+        <p class="font-heading italic text-4xl mb-2">10–15</p>
+        <p class="text-xs text-[#5a5a5a]">guests</p>
+      </button>
+      <button class="choice py-12 px-8 text-center" onclick="answer('size', 'medium', 1)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">Mid-size</p>
+        <p class="font-heading italic text-4xl mb-2">16–22</p>
+        <p class="text-xs text-[#5a5a5a]">guests</p>
+      </button>
+      <button class="choice py-12 px-8 text-center" onclick="answer('size', 'large', 1)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">Full</p>
+        <p class="font-heading italic text-4xl mb-2">23–26</p>
+        <p class="text-xs text-[#5a5a5a]">guests</p>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STAGE 2 — THE HEART OF THE WEEK ════════════════ -->
+<section id="stage-2" class="stage min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+  <div class="max-w-5xl w-full">
+    <div class="text-center mb-12">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Question 2 of 3</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(2rem, 4vw, 3rem);">
+        What is the heart of the week?
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+      <button class="choice overflow-hidden text-left" onclick="answer('vibe', 'stillness', 2)">
+        <div class="aspect-[4/5] overflow-hidden photo-wrap bg-black">
+          <div class="photo w-full h-full bg-cover bg-center" style="background-image: url('https://tripswithasoul.com/wp-content/uploads/2025/05/INTAAYA-Tea-Temple-1.jpg');"></div>
+        </div>
+        <div class="p-7">
+          <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">For groups that want</p>
+          <p class="font-heading italic text-2xl mb-2">Stillness.</p>
+          <p class="text-[0.78rem] text-[#5a5a5a] leading-relaxed">Cliff-edge yoga shala, breathwork, integration. Nature does the talking.</p>
+        </div>
+      </button>
+
+      <button class="choice overflow-hidden text-left" onclick="answer('vibe', 'adventure', 2)">
+        <div class="aspect-[4/5] overflow-hidden photo-wrap bg-black">
+          <div class="photo w-full h-full bg-cover bg-center" style="background-image: url('https://cdn.prod.website-files.com/61a5e605e33fbc60196d8d64/62e8921b8aa3c2241596a8ec_the-sanubari-riding-horse-beach-remoteness.jpg');"></div>
+        </div>
+        <div class="p-7">
+          <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">For groups that want</p>
+          <p class="font-heading italic text-2xl mb-2">Adventure.</p>
+          <p class="text-[0.78rem] text-[#5a5a5a] leading-relaxed">Horses on the sand, surf-friendly reef, 2 km of beach. Movement at the heart.</p>
+        </div>
+      </button>
+
+      <button class="choice overflow-hidden text-left" onclick="answer('vibe', 'intimacy', 2)">
+        <div class="aspect-[4/5] overflow-hidden photo-wrap bg-black">
+          <div class="photo w-full h-full bg-cover bg-center" style="background-image: url('https://www.haweri.com/images/Home_1_0/haweri_estate_1.jpg');"></div>
+        </div>
+        <div class="p-7">
+          <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-3">For groups that want</p>
+          <p class="font-heading italic text-2xl mb-2">Intimacy.</p>
+          <p class="text-[0.78rem] text-[#5a5a5a] leading-relaxed">Five villas, four pools, a sacred Sumbanese headland. The smallest, most private.</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STAGE 3 — WHEN ════════════════ -->
+<section id="stage-3" class="stage min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+  <div class="max-w-3xl w-full text-center">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Question 3 of 3</p>
+    <h2 class="font-heading italic font-light leading-[1.15] mb-12" style="font-size: clamp(2rem, 4vw, 3rem);">
+      When are you thinking?
+    </h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+      <button class="choice py-7 px-3 text-center" onclick="answer('when', 'mar-may', 3)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Q1</p>
+        <p class="font-heading italic text-xl">Mar–May</p>
+      </button>
+      <button class="choice py-7 px-3 text-center" onclick="answer('when', 'jun-aug', 3)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Q2</p>
+        <p class="font-heading italic text-xl">Jun–Aug</p>
+      </button>
+      <button class="choice py-7 px-3 text-center" onclick="answer('when', 'sep-nov', 3)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Q3</p>
+        <p class="font-heading italic text-xl">Sep–Nov</p>
+      </button>
+      <button class="choice py-7 px-3 text-center" onclick="answer('when', 'flexible', 3)">
+        <p class="choice-eyebrow font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Open</p>
+        <p class="font-heading italic text-xl">Flexible</p>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STAGE 4 — MATCHING (loading) ════════════════ -->
+<section id="stage-4-loading" class="stage min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+  <div class="text-center">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-6">Matching your week</p>
+    <h2 class="font-heading italic font-light leading-[1.15] mb-10" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem);">
+      Finding the home that fits.
+    </h2>
+    <div class="flex justify-center gap-3 mt-8">
+      <span class="pulse-dot w-2 h-2 bg-[#8c8c79] rounded-full"></span>
+      <span class="pulse-dot w-2 h-2 bg-[#8c8c79] rounded-full"></span>
+      <span class="pulse-dot w-2 h-2 bg-[#8c8c79] rounded-full"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STAGE 5 — MATCH RESULT ════════════════ -->
+<section id="stage-5-match" class="stage pt-24 pb-16">
+  <div class="match-reveal">
+
+    <!-- The reveal -->
+    <div class="text-center px-6 mb-20 max-w-3xl mx-auto">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-6">Based on what you told us</p>
+      <h2 class="font-heading italic font-light leading-[1.1] mb-6" style="font-size: clamp(2.2rem, 4.5vw, 3.4rem);">
+        We'd put you at<br />
+        <em class="text-[#8c8c79]" id="matchedName">Estate</em>.
+      </h2>
+      <p class="font-light text-[#5a5a5a] leading-relaxed max-w-[44ch] mx-auto" id="matchedTagline">Loading…</p>
+    </div>
+
+    <!-- Hero photo of matched estate -->
+    <div class="relative w-full h-[70vh] overflow-hidden mb-20">
+      <div class="absolute inset-0 bg-cover bg-center" id="matchedHero"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/35"></div>
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-center text-white px-6">
+        <p class="font-josefin uppercase tracking-[0.42em] text-[0.6rem] mb-3 opacity-85" id="matchedLocation"></p>
+        <h3 class="font-heading italic font-light" style="font-size: clamp(2.4rem, 5vw, 4rem);" id="matchedHeroName"></h3>
+      </div>
+    </div>
+
+    <!-- Estate detail (Indonesia-style) -->
+    <div class="max-w-4xl mx-auto px-6 mb-24">
+      <div class="grid md:grid-cols-3 gap-y-10 gap-x-8 mb-16">
+        <div>
+          <p class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Sleeps</p>
+          <p class="font-heading italic text-3xl" id="matchedSleeps"></p>
+        </div>
+        <div>
+          <p class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Footprint</p>
+          <p class="font-heading italic text-3xl" id="matchedFootprint"></p>
+        </div>
+        <div>
+          <p class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">From</p>
+          <p class="font-heading italic text-3xl" id="matchedPrice"></p>
+        </div>
+      </div>
+
+      <div class="prose max-w-none">
+        <p class="font-light text-[1.05rem] leading-[1.8] text-[#2D2D2D]" id="matchedStory"></p>
+      </div>
+
+      <ul class="mt-12 space-y-4 border-t border-black/10 pt-8" id="matchedFeatures"></ul>
+    </div>
+
+    <!-- Alternative estates -->
+    <div class="px-6 py-20 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-14">
+          <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">If your group leaned differently</p>
+          <h3 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(1.7rem, 3vw, 2.2rem);">
+            The other two estates we considered.
+          </h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-7" id="alternatives"></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="px-6 py-28 bg-[#464543] text-white/85">
+      <div class="max-w-2xl mx-auto text-center">
+        <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#a8a894] mb-6">Your next step</p>
+        <h2 class="font-heading italic font-light leading-[1.1] mb-8" style="font-size: clamp(2.2rem, 4vw, 3.2rem);">
+          Let's plan this week.
+        </h2>
+        <p class="font-light leading-relaxed text-white/75 mb-12 max-w-[40ch] mx-auto">
+          A 30-minute call with Darina to walk through dates, programming and the home. No commitment.
+        </p>
+        <a href="#" class="inline-block bg-white text-black px-12 py-5 font-josefin uppercase tracking-[0.32em] text-[0.7rem] hover:bg-[#d4d2c5] transition-colors">
+          Book a call with Darina →
+        </a>
+        <p class="mt-10"><button onclick="restart()" class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-white/60 border-b border-white/30 hover:text-white">Or run the questions again</button></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer mini -->
+<footer class="px-8 py-8 text-center bg-[#F6F6F6] border-t border-black/8">
+  <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#8c8c79]">
+    Nomadikas · private proposal for Maya · gamified mockup · v1
+  </p>
+</footer>
+
+<script>
+// ════════════════ ESTATE DATA ════════════════
+const ESTATES = {
+  manta: {
+    name: "Estate Manta Cliff",
+    heroName: "Estate Manta Cliff",
+    location: "Nusa Penida · Indonesia",
+    tagline: "A living sanctuary above Diamond Beach, built for stillness. Thirteen rammed-earth tent suites, manta-shaped bamboo shala, the Indian Ocean below.",
+    hero: "https://tripswithasoul.com/wp-content/uploads/2025/05/INTAAYA-Drone.png",
+    sleeps: "26",
+    footprint: "1.9 ha · cliff",
+    price: "€9,500 / night",
+    story: "Thirteen rammed-earth tent suites perched on a 53-metre cliff above the Indian Ocean. The manta-shaped bamboo yoga shala is the architectural centrepiece — open-air, vaulted, perched on the cliff edge. Off-grid by design. Built specifically for retreats, with every piece of programming infrastructure that implies: shala, tea temple, spa, farm-to-table kitchen, integration spaces. The kind of place where nature does most of the talking.",
+    features: [
+      "Manta-shaped bamboo yoga shala overlooking Diamond Beach",
+      "Tea temple for breathwork, sound, smaller circles",
+      "Cliffside spa for integration and rest",
+      "Farm-to-table restaurant — menus built with the retreat leader",
+      "Private beach access via carved cliff stairs"
+    ]
+  },
+  sumba: {
+    name: "Estate Barefoot Sumba",
+    heroName: "Estate Barefoot Sumba",
+    location: "Sumba · Indonesia",
+    tagline: "Eleven hand-crafted villas on two kilometres of private white sand. Horses on the beach, a surf-friendly reef, 100 hectares of ancestral land.",
+    hero: "https://cdn.prod.website-files.com/61a5e605e33fbc60196d8d64/663b1a9ec3ece51cdc05f052_The-Sanubari-7%20(1)%20(1).jpg",
+    sleeps: "22",
+    footprint: "100 ha · beachfront",
+    price: "€7,500 / night",
+    story: "Eleven hand-crafted villas on the Lamboya coast — two kilometres of private beach, a surf-friendly reef, horses on the sand at sunset. Set on 100 hectares within Sumba's ancestral Marapu lands. Movement is built into the geography here: the beach goes on forever, the surf works for all levels, the horses run at sunrise. A retreat that takes the group outside the shala as much as into it.",
+    features: [
+      "2 km of private white-sand beach",
+      "Horses available at sunrise and sunset",
+      "Surf-friendly reef for all levels",
+      "Hand-crafted villas with local weavings + textiles",
+      "Sumbanese cultural exchange arranged on request"
+    ]
+  },
+  nihi: {
+    name: "Estate Nihi Cliff",
+    heroName: "Estate Nihi Cliff",
+    location: "Sumba · Indonesia",
+    tagline: "The smallest of the three. Five villas on a sacred Sumbanese headland — five acres, four pools, a waterfront yoga pavilion. The most intimate.",
+    hero: "https://www.haweri.com/images/Home_1_0/haweri_estate_1.jpg",
+    sleeps: "10–15",
+    footprint: "5 acres · headland",
+    price: "€5,800 / night",
+    story: "A private five-acre oceanfront estate — five individual villas, four pools, a waterfront yoga pavilion, and arranged access to a world-class spa and celebrated surf breaks next door. The most intimate of the three. The kind of place where the group of ten knows each other's names by day two, where the host and the chef know your dietary needs by name, where the headland holds the whole week.",
+    features: [
+      "Waterfront yoga pavilion with 180° ocean view",
+      "Five individual villas with private outdoor space",
+      "Access to celebrated spa + surf breaks next door",
+      "Sumbanese ikat detail throughout",
+      "Resident chef tailoring menus to the group"
+    ]
+  }
+};
+
+// ════════════════ MATCHING LOGIC ════════════════
+// Primary axis: vibe. Secondary: group size (overrides if mismatch).
+function pickMatch(answers) {
+  let matchKey;
+  if (answers.vibe === 'stillness') matchKey = 'manta';
+  else if (answers.vibe === 'adventure') matchKey = 'sumba';
+  else matchKey = 'nihi';
+
+  // Size override: if group size doesn't fit, swap to the best capacity match
+  if (answers.size === 'large' && matchKey === 'nihi') matchKey = 'manta'; // 23-26 won't fit Nihi
+  if (answers.size === 'small' && matchKey === 'sumba') matchKey = 'nihi'; // small group → intimate fits better
+
+  return matchKey;
+}
+
+// ════════════════ STATE + FLOW ════════════════
+let state = { stage: 0, answers: {} };
+
+function setProgress(step) {
+  document.querySelectorAll('#progress .dot').forEach((dot, i) => {
+    dot.classList.remove('done', 'current');
+    if (i < step) dot.classList.add('done');
+    else if (i === step) dot.classList.add('current');
+  });
+}
+
+function showStage(id) {
+  // Hide all stages
+  document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  // Show target
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    // Smooth scroll to top of the stage
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+function advance(toStep) {
+  state.stage = toStep;
+  setProgress(toStep);
+  if (toStep === 1) showStage('stage-1');
+  else if (toStep === 2) showStage('stage-2');
+  else if (toStep === 3) showStage('stage-3');
+  else if (toStep === 4) {
+    showStage('stage-4-loading');
+    document.getElementById('restartBtn').style.visibility = 'visible';
+    setTimeout(() => {
+      const matchKey = pickMatch(state.answers);
+      renderMatch(matchKey);
+      setProgress(4);
+      showStage('stage-5-match');
+    }, 1800);
+  }
+}
+
+function answer(question, value, currentStage) {
+  state.answers[question] = value;
+  // Mark choice as selected for visual feedback
+  const stageEl = document.getElementById('stage-' + currentStage);
+  stageEl.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  // Advance after a beat
+  setTimeout(() => advance(currentStage + 1), 600);
+}
+
+function renderMatch(key) {
+  const estate = ESTATES[key];
+  document.getElementById('matchedName').textContent = estate.name;
+  document.getElementById('matchedTagline').textContent = estate.tagline;
+  document.getElementById('matchedHero').style.backgroundImage = `url('${estate.hero}')`;
+  document.getElementById('matchedLocation').textContent = estate.location;
+  document.getElementById('matchedHeroName').textContent = estate.heroName;
+  document.getElementById('matchedSleeps').textContent = estate.sleeps;
+  document.getElementById('matchedFootprint').textContent = estate.footprint;
+  document.getElementById('matchedPrice').textContent = estate.price;
+  document.getElementById('matchedStory').textContent = estate.story;
+
+  const featuresEl = document.getElementById('matchedFeatures');
+  featuresEl.innerHTML = estate.features.map(f =>
+    `<li class="flex gap-4 items-start py-3 border-b border-black/8 font-heading italic text-[1.05rem] text-[#2D2D2D]"><span class="text-[#8c8c79] not-italic font-normal flex-shrink-0">·</span>${f}</li>`
+  ).join('');
+
+  // Render the other two as alternatives
+  const altsEl = document.getElementById('alternatives');
+  const others = Object.keys(ESTATES).filter(k => k !== key);
+  altsEl.innerHTML = others.map(k => {
+    const e = ESTATES[k];
+    return `
+      <div class="group cursor-pointer">
+        <div class="aspect-[4/5] overflow-hidden bg-black mb-4 photo-wrap">
+          <div class="photo w-full h-full bg-cover bg-center" style="background-image: url('${e.hero}')"></div>
+        </div>
+        <p class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">${e.location}</p>
+        <h4 class="font-heading italic text-xl mb-2 group-hover:text-[#8c8c79] transition-colors">${e.name}</h4>
+        <p class="text-[0.82rem] font-light text-[#5a5a5a] leading-relaxed">${e.tagline}</p>
+      </div>
+    `;
+  }).join('');
+}
+
+function restart() {
+  state = { stage: 0, answers: {} };
+  setProgress(0);
+  document.getElementById('restartBtn').style.visibility = 'hidden';
+  document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+  showStage('stage-0');
+}
+
+function skipToBrowse() {
+  // Skip the wizard, show all three directly via the "alternatives" pattern
+  state.answers = { vibe: 'stillness', size: 'medium', when: 'flexible' };
+  renderMatch('manta');
+  setProgress(4);
+  showStage('stage-5-match');
+  document.getElementById('restartBtn').style.visibility = 'visible';
+}
+
+// Init
+setProgress(0);
+</script>
+
+</body>
+</html>
