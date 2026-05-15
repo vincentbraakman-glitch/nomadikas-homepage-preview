@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Greece — A private selection · Nomadikas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #F6F6F6; color: #2D2D2D; }
+  .font-heading { font-family: 'Amiri', serif; }
+  .font-josefin { font-family: 'Josefin Sans', sans-serif; }
+  .photo-hover { transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
+  .group:hover .photo-hover { transform: scale(1.03); }
+  .exp-card .exp-back { opacity: 0; transition: opacity 0.5s ease; }
+  .exp-card:hover .exp-back { opacity: 1; }
+  .exp-card .exp-front { opacity: 1; transition: opacity 0.5s ease; }
+  .exp-card:hover .exp-front { opacity: 0; }
+  .exp-card .exp-photo { transition: transform 0.7s ease; }
+  .exp-card:hover .exp-photo { transform: scale(1.05); }
+  @keyframes pulse-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  .pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+  body.modal-open { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-40 px-8 py-5 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
+    <a href="index.html" class="font-heading italic text-xl tracking-tight">nomadikas</a>
+    <a href="index.html" class="hidden md:flex items-center gap-2 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a] hover:text-black transition-colors">
+      <span>←</span> All countries
+    </a>
+    <a href="#concierge" class="font-josefin uppercase tracking-[0.28em] text-[0.6rem] border border-black/30 px-4 py-2 hover:bg-black hover:text-white transition-colors">Speak to Darina</a>
+  </div>
+</header>
+
+<!-- Country hero -->
+<section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2024/02/4.jpg');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/15 to-black/55"></div>
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
+    <p class="font-josefin uppercase tracking-[0.42em] text-[0.62rem] mb-6 opacity-85">Greece · Zakynthos · One home</p>
+    <h1 class="font-heading italic font-light leading-[1.05]" style="font-size: clamp(2.8rem, 5.5vw, 4.8rem);">
+      The Ionian.<br />
+      A private path <em class="text-[#d4d2c5]">to the sea.</em>
+    </h1>
+  </div>
+</section>
+
+<section class="px-6 py-20 max-w-3xl mx-auto text-center">
+  <p class="font-light leading-relaxed text-[#5a5a5a] text-[1.05rem]">
+    On the quiet western coast of Zakynthos — in a village that still belongs to its villagers — a single house opens directly onto the Ionian. Eight bedrooms, two infinity pools, olive and cypress at the door, and a stretch of beach below that fills with no other footprints. We chose this one home, alone, because it does what the rest of the island rarely lets you have: the beach, the privacy, the silence — all in the same week.
+  </p>
+</section>
+
+<!-- ════════════════════ VENUE — Beachfront Villa Zakynthos ════════════════════ -->
+<section class="px-6 py-12 max-w-6xl mx-auto">
+  <article class="venue">
+
+    <button onclick="openSlider('zakynthos')" class="block w-full relative group overflow-hidden mb-10 bg-black cursor-zoom-in">
+      <div class="aspect-[16/9] photo-hover w-full bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/2024/02/4.jpg');"></div>
+      <div class="absolute inset-y-0 left-4 md:left-6 flex items-center pointer-events-none">
+        <div class="bg-white/85 backdrop-blur w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl text-[#1a1a1a]">‹</div>
+      </div>
+      <div class="absolute inset-y-0 right-4 md:right-6 flex items-center pointer-events-none">
+        <div class="bg-white/85 backdrop-blur w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl text-[#1a1a1a]">›</div>
+      </div>
+      <div class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur text-white px-5 py-2 font-josefin uppercase tracking-[0.32em] text-[0.55rem] pulse-soft">
+        Click to view 10 photos
+      </div>
+    </button>
+
+    <div class="grid md:grid-cols-2 gap-10 mb-10">
+      <div>
+        <p class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-[#8c8c79] mb-3">Zakynthos · Ionian Coast · Greece</p>
+        <h2 class="font-heading italic text-[2.6rem] leading-[1.05] mb-5">Beachfront Villa Zakynthos</h2>
+        <p class="font-heading italic text-[1.2rem] text-[#5a5a5a] mb-7 leading-snug">A bohemian beachfront retreat among olives and cypress, the Ionian at your door.</p>
+        <div class="grid grid-cols-3 gap-4 max-w-md">
+          <div><p class="font-josefin uppercase tracking-[0.22em] text-[0.55rem] text-[#8c8c79] mb-1">Sleeps</p><p class="font-heading italic text-2xl">16</p></div>
+          <div><p class="font-josefin uppercase tracking-[0.22em] text-[0.55rem] text-[#8c8c79] mb-1">Bedrooms</p><p class="font-heading italic text-2xl">8</p></div>
+          <div><p class="font-josefin uppercase tracking-[0.22em] text-[0.55rem] text-[#8c8c79] mb-1">Pools</p><p class="font-heading italic text-2xl">2</p></div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-[0.95rem] leading-relaxed text-[#2D2D2D] mb-7 font-light">
+          An eight-bedroom house on the quiet western coast, opening directly onto the sea. Two infinity pools draw a thin line between you and the Ionian. Two kitchens — one inside, one under vines — so a private chef can work without interrupting the rhythm of the house. Snorkel with sea turtles before breakfast; a short boat ride to the Blue Caves before lunch. The villa is wired discreetly — Bluetooth speakers tucked into the architecture, smart TVs hidden when you don't want them — but never feels engineered.
+        </p>
+        <div class="flex flex-wrap gap-3 mb-7">
+          <button onclick="openSlider('zakynthos')" class="px-5 py-3 border border-black/30 hover:bg-black hover:text-white transition-colors font-josefin uppercase tracking-[0.28em] text-[0.6rem] flex items-center gap-2">
+            <span>View 10 photos</span> <span>→</span>
+          </button>
+          <button onclick="openInfo('zakynthos')" class="px-5 py-3 border border-black/30 hover:bg-black hover:text-white transition-colors font-josefin uppercase tracking-[0.28em] text-[0.6rem] flex items-center gap-2">
+            <span>Description &amp; FAQs</span> <span>→</span>
+          </button>
+        </div>
+        <div class="pt-5 border-t border-black/10 text-[0.85rem] text-[#5a5a5a] font-light">
+          <p class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#8c8c79] mb-2">Catering · indicative</p>
+          <p>Full board from <span class="text-black">€185</span> / person / day · Private chef from <span class="text-black">€650</span> / day</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-4 py-8 border-y border-black/10">
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="waves" class="w-4 h-4 text-[#8c8c79]"></i><span>Private beach</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="droplet" class="w-4 h-4 text-[#8c8c79]"></i><span>2 infinity pools</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="droplet" class="w-4 h-4 text-[#8c8c79]"></i><span>Jacuzzi</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="eye" class="w-4 h-4 text-[#8c8c79]"></i><span>Sea views</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="flower" class="w-4 h-4 text-[#8c8c79]"></i><span>Yoga equipment</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="utensils-crossed" class="w-4 h-4 text-[#8c8c79]"></i><span>Private chef</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="utensils" class="w-4 h-4 text-[#8c8c79]"></i><span>Outdoor kitchen</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="trees" class="w-4 h-4 text-[#8c8c79]"></i><span>Mediterranean garden</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="heart-pulse" class="w-4 h-4 text-[#8c8c79]"></i><span>Wellness therapists</span></div>
+      <div class="flex items-center gap-2.5 text-[0.85rem] text-[#2D2D2D]"><i data-lucide="bell" class="w-4 h-4 text-[#8c8c79]"></i><span>Concierge + housekeeping</span></div>
+    </div>
+
+  </article>
+</section>
+
+<!-- Editorial quote / framing -->
+<section class="py-16 max-w-3xl mx-auto text-center px-6">
+  <p class="font-heading italic text-[#8c8c79] text-2xl leading-snug">
+    "Mornings begin slowly. Coffee at the daybed, a swim before breakfast, then a walk down to a beach where the only footprints are yours."
+  </p>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="py-24 md:py-32 bg-[#F0EDE5]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Signature experiences</p>
+      <h2 class="font-heading italic font-light leading-[1.15]" style="font-size: clamp(2rem, 3.6vw, 2.8rem);">
+        Experiences that define the journey.
+      </h2>
+      <p class="mt-5 text-[#5a5a5a] font-light leading-relaxed text-[0.95rem] max-w-[44ch] mx-auto">Hover any tile to see what's possible — the concierge arranges all of it.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1538333702852-c0f51ad88a72?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="ship" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Private boat to<br>Navagio shipwreck</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="ship" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Private boat to Navagio shipwreck</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">The shipwreck cove on every postcard — but at first light, before the day boats arrive. Just your party in the bay.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="fish" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Snorkel with<br>sea turtles</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="fish" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Snorkel with sea turtles</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">Zakynthos is home to the loggerhead's last Mediterranean nesting site. A marine biologist guides you through the protected bay.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="sunrise" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Blue Caves<br>at dawn</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="sunrise" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Blue Caves at dawn</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">The grottos at the northern tip of the island lit only by the rising sun through their archways. Empty. Yours.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1488372759477-a7f4aa078cb6?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="anchor" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Sunset sail to<br>Marathonisi</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="anchor" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Sunset sail to Marathonisi</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">A private catamaran out to "Turtle Island" for sundown — a Greek host pouring chilled Assyrtiko, dinner on the deck.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="wine" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Cellar tasting<br>in Skinaria</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="wine" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Cellar tasting in Skinaria</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">A small-batch winery in the hills above the coast — verdea and robola grapes, lunch on the terrace with the vigneron.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1495567720989-cebdbdd97913?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="utensils" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Private cliffside<br>lunch</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="utensils" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Private cliffside lunch</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">A long table set on a private headland above the sea — the villa's chef serves grilled fish, taramasalata, the day's catch.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542296332-2e4473faf563?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="plane" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Helicopter tour<br>of the coast</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="plane" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Helicopter tour of the coast</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">A 40-minute private flight along the cliffs of the western coast — Navagio, Shipwreck Beach and the Blue Caves from the air.</p>
+        </div>
+      </div>
+
+      <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+        <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="exp-front absolute inset-0 flex flex-col items-center justify-end p-6 text-white">
+          <i data-lucide="footprints" class="w-7 h-7 text-[#d4d2c5] mb-3"></i>
+          <h3 class="font-heading italic text-xl text-center">Hike Keri<br>lighthouse trail</h3>
+        </div>
+        <div class="exp-back absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center">
+          <i data-lucide="footprints" class="w-8 h-8 text-[#d4d2c5] mb-4"></i>
+          <h3 class="font-heading italic text-lg mb-3">Hike Keri lighthouse trail</h3>
+          <p class="text-[0.82rem] leading-relaxed text-white/85 max-w-xs">A morning walk through cypress and olive groves to the most southerly lighthouse on the island — sunrise, breakfast at the top.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="concierge" class="px-6 py-28 bg-[#464543] text-white/85">
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#a8a894] mb-6">When you've chosen the one</p>
+    <h2 class="font-heading italic font-light leading-[1.15] mb-8" style="font-size: clamp(2rem, 3.8vw, 2.8rem);">
+      Let Darina plan the week.
+    </h2>
+    <p class="font-light leading-relaxed text-white/75 mb-12 max-w-[40ch] mx-auto">
+      A 30-minute call. She'll walk you through dates, the home, the chef, and anything else you'd like the week to hold.
+    </p>
+    <a href="#" class="inline-block bg-white text-black px-12 py-5 font-josefin uppercase tracking-[0.32em] text-[0.7rem] hover:bg-[#d4d2c5] transition-colors">Book a call with Darina →</a>
+    <p class="mt-10"><a href="index.html" class="font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-white/60 border-b border-white/30 hover:text-white">← Or look at Portugal or Spain</a></p>
+  </div>
+</section>
+
+<footer class="px-8 py-10 text-center bg-[#F6F6F6] border-t border-black/8">
+  <p class="font-heading italic text-lg mb-2">nomadikas</p>
+  <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#8c8c79]">Greece · Zakynthos · private proposal</p>
+</footer>
+
+<div id="modal-photos" class="fixed inset-0 z-[100] hidden bg-black/95 items-center justify-center">
+  <button onclick="closeModals()" class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl z-10 leading-none">×</button>
+  <div class="relative w-full max-w-6xl flex flex-col items-center justify-center px-12 md:px-16">
+    <img id="modal-photo-img" class="max-w-full max-h-[80vh] object-contain" src="" />
+    <p id="modal-photo-counter" class="mt-4 text-white/60 font-josefin uppercase tracking-[0.32em] text-[0.62rem]">1 / 10</p>
+    <button onclick="prevPhoto()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">‹</button>
+    <button onclick="nextPhoto()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">›</button>
+  </div>
+</div>
+
+<div id="modal-info" class="fixed inset-0 z-[100] hidden bg-black/85 items-start justify-center overflow-y-auto py-12 px-4">
+  <div class="relative bg-[#F6F6F6] max-w-2xl w-full">
+    <button onclick="closeModals()" class="absolute top-5 right-6 text-[#5a5a5a] hover:text-black text-3xl leading-none z-10">×</button>
+    <div class="aspect-[16/9] bg-cover bg-center" id="modal-info-photo"></div>
+    <div class="p-8 md:p-12">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-[#8c8c79] mb-3" id="modal-info-location"></p>
+      <h2 class="font-heading italic text-3xl mb-6" id="modal-info-name"></h2>
+      <p class="text-[0.92rem] leading-relaxed text-[#2D2D2D] font-light whitespace-pre-line" id="modal-info-description"></p>
+      <h3 class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mt-10 mb-5">Questions &amp; answers</h3>
+      <div id="modal-info-faqs" class="border-t border-black/10"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+const VENUES = {
+  zakynthos: {
+    name: "Beachfront Villa Zakynthos",
+    location: "Zakynthos · Ionian · Greece",
+    hero: "https://nomadikas.com/wp-content/uploads/2024/02/4.jpg",
+    photos: [
+      "https://nomadikas.com/wp-content/uploads/2024/02/4.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/5.jpg",
+      "https://nomadikas.com/wp-content/uploads/2024/01/16.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/15.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/10.jpg",
+      "https://nomadikas.com/wp-content/uploads/2024/01/17.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/14.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/13.jpg",
+      "https://nomadikas.com/wp-content/uploads/2023/10/11.jpg",
+      "https://nomadikas.com/wp-content/uploads/2024/02/22.jpg",
+      "https://nomadikas.com/wp-content/uploads/2024/02/25.jpg"
+    ],
+    description: "On the quiet western coast of Zakynthos, in a village that still belongs to its villagers, an 8-bedroom house opens directly onto the sea. Olive and cypress trees frame the gardens; two infinity pools draw a thin line between you and the Ionian. The interiors are unfussy and low-toned — pale stone, soft linen, en-suite bathrooms, the smell of pine through open shutters. Mornings begin slowly: coffee at the daybed, a swim before breakfast, then a walk down to a private stretch of beach where the only footprints are yours. The villa is wired discreetly — Bluetooth speakers tucked into the architecture, smart TVs hidden when you don't want them — but it never feels engineered. Two kitchens (one inside, one outdoors under vines) mean a private chef can work without interrupting the rhythm of the house. Afternoons run on island time: snorkelling with sea turtles, a short boat to the Blue Caves, or simply staying put. By evening, the light leans gold and the housekeeping has come and gone, leaving turn-down and a candlelit terrace. Navagio — the shipwreck cove on every postcard — is a private boat ride away. The rest of the time, you'll wonder why you'd leave.",
+    faqs: [
+      { q: "How does the booking process work?", a: "After you choose a date, an advisor confirms availability, walks you through the contract, and your dedicated concierge takes over the logistics from there." },
+      { q: "What's the payment schedule?", a: "A deposit is due within three business days of signing the contract; the remaining balance is settled 90 days before arrival." },
+      { q: "Is there a security deposit?", a: "Yes — the amount is quoted in your contract before booking and refunded after departure." },
+      { q: "What are check-in and check-out times?", a: "Check-in is at 4:00 PM; check-out is at 10:00 AM. Both can be flexed where the calendar allows." },
+      { q: "Can a private chef be arranged?", a: "Yes. A resident or visiting chef can be booked for breakfast, lunch, dinner, or a full week of menus tailored to your group." },
+      { q: "Is the villa suitable for a retreat?", a: "Yes — the property is regularly used for yoga and wellness retreats, with outdoor and indoor practice space and a separate kitchen and dining area." },
+      { q: "Is the beach truly private?", a: "The villa fronts a stretch of beach with direct access; while no Greek beach is legally \"owned,\" the gardens and terraces make the foreshore feel exclusive." }
+    ]
+  }
+};
+
+let currentVenue = null;
+let currentPhotoIndex = 0;
+
+function openSlider(key) {
+  currentVenue = VENUES[key]; currentPhotoIndex = 0; showPhoto();
+  const m = document.getElementById('modal-photos');
+  m.classList.remove('hidden'); m.classList.add('flex');
+  document.body.classList.add('modal-open');
+}
+function openInfo(key) {
+  const v = VENUES[key]; currentVenue = v;
+  document.getElementById('modal-info-photo').style.backgroundImage = `url('${v.hero}')`;
+  document.getElementById('modal-info-location').textContent = v.location;
+  document.getElementById('modal-info-name').textContent = v.name;
+  document.getElementById('modal-info-description').textContent = v.description;
+  document.getElementById('modal-info-faqs').innerHTML = v.faqs.map(f => `
+    <details class="border-b border-black/10 group">
+      <summary class="py-5 cursor-pointer font-heading italic text-[1.05rem] flex justify-between items-start gap-4 list-none [&::-webkit-details-marker]:hidden hover:text-[#8c8c79] transition-colors">
+        <span>${f.q}</span>
+        <span class="text-2xl text-[#8c8c79] group-open:rotate-45 transition-transform leading-none mt-0.5 flex-shrink-0">+</span>
+      </summary>
+      <p class="pb-6 text-[0.88rem] font-light leading-[1.75] text-[#2D2D2D]">${f.a}</p>
+    </details>`).join('');
+  const m = document.getElementById('modal-info');
+  m.classList.remove('hidden'); m.classList.add('flex');
+  document.body.classList.add('modal-open');
+}
+function closeModals() {
+  ['modal-photos','modal-info'].forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.classList.remove('flex'); });
+  document.body.classList.remove('modal-open');
+}
+function showPhoto() {
+  document.getElementById('modal-photo-img').src = currentVenue.photos[currentPhotoIndex];
+  document.getElementById('modal-photo-counter').textContent = `${currentPhotoIndex + 1} / ${currentVenue.photos.length}`;
+}
+function prevPhoto() { currentPhotoIndex = (currentPhotoIndex - 1 + currentVenue.photos.length) % currentVenue.photos.length; showPhoto(); }
+function nextPhoto() { currentPhotoIndex = (currentPhotoIndex + 1) % currentVenue.photos.length; showPhoto(); }
+document.addEventListener('keydown', e => {
+  const open = !document.getElementById('modal-photos').classList.contains('hidden') || !document.getElementById('modal-info').classList.contains('hidden');
+  if (!open) return;
+  if (e.key === 'ArrowLeft' && !document.getElementById('modal-photos').classList.contains('hidden')) prevPhoto();
+  else if (e.key === 'ArrowRight' && !document.getElementById('modal-photos').classList.contains('hidden')) nextPhoto();
+  else if (e.key === 'Escape') closeModals();
+});
+['modal-photos','modal-info'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if (e.target.id === id) closeModals(); });
+});
+lucide.createIcons();
+</script>
+</body>
+</html>
