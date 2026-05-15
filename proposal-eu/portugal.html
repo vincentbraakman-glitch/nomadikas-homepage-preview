@@ -17,36 +17,57 @@
   .photo-hover { transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .group:hover .photo-hover { transform: scale(1.03); }
 
-  /* Ken Burns hero — slow drift + zoom for eye-catch */
-  @keyframes ken-burns {
-    0%   { transform: scale(1.05) translate(0, 0); }
-    50%  { transform: scale(1.12) translate(-1.5%, 1%); }
-    100% { transform: scale(1.05) translate(0, 0); }
-  }
+  @keyframes ken-burns { 0%   { transform: scale(1.05) translate(0, 0); } 50%  { transform: scale(1.12) translate(-1.5%, 1%); } 100% { transform: scale(1.05) translate(0, 0); } }
   .hero-bg { animation: ken-burns 36s ease-in-out infinite; }
 
   body.modal-open { overflow: hidden; }
-
-  /* Favourite */
   .fav-btn.fav-active svg { fill: #fff; stroke: #fff; }
   .fav-btn.fav-active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
   .price-strip { border-top: 1px solid rgba(0,0,0,0.10); }
   @keyframes pulse-soft { 0%, 100% { transform: translateY(0); opacity: 0.85; } 50% { transform: translateY(-3px); opacity: 1; } }
   .pulse-soft { animation: pulse-soft 2.2s ease-in-out infinite; }
 
-  /* Experience cards — Naveo hover pattern */
+  /* Experience card hover — left-aligned, slide-up from bottom */
   .exp-photo { transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
   .exp-card:hover .exp-photo { transform: scale(1.06); }
-  .exp-default { opacity: 1; transition: opacity 0.5s ease; }
-  .exp-hover { opacity: 0; transition: opacity 0.5s ease; }
+  .exp-default { transition: opacity 0.5s ease; }
   .exp-card:hover .exp-default { opacity: 0; }
-  .exp-card:hover .exp-hover { opacity: 1; }
+  .exp-hover {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+  }
+  .exp-card:hover .exp-hover { opacity: 1; transform: translateY(0); }
   .exp-dark { opacity: 0; transition: opacity 0.5s ease; }
   .exp-card:hover .exp-dark { opacity: 1; }
 
-  /* Swiper buttons (we render our own) */
-  .exp-swiper { overflow: hidden; }
-  .swiper-button-disabled { opacity: 0.3; cursor: not-allowed; }
+  .exp-swiper { overflow: visible; }
+  .exp-swiper .swiper-slide { height: auto; }
+
+  /* Modal photo slider — Indonesia style */
+  #modal-photos { background: #141414; }
+  .modal-fade-top { position: absolute; left: 0; right: 0; top: 0; height: 140px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0) 100%); }
+  .modal-fade-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; z-index: 2; pointer-events: none; background: linear-gradient(0deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0) 100%); }
+  .modal-dot { width: 2rem; height: 2px; background: rgba(255,255,255,0.3); cursor: pointer; border: none; padding: 0; transition: background 0.3s ease; }
+  .modal-dot.active { background: #faf8f3; }
+  .modal-photo-arrow {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+  }
+  .modal-photo-arrow:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.5); }
+  .modal-photo-caption {
+    background: rgba(10,10,10,0.55);
+    backdrop-filter: blur(6px);
+    color: rgba(250,248,243,0.95);
+    font-family: 'Amiri', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    padding: 0.55rem 1.25rem;
+    transition: opacity 0.4s ease;
+  }
 </style>
 </head>
 <body>
@@ -54,23 +75,17 @@
 <header class="sticky top-0 z-40 px-6 md:px-8 py-4 bg-[#F6F6F6]/95 backdrop-blur-md border-b border-black/8">
   <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
     <a href="index.html" class="block"><img src="https://nomadikas.com/wp-content/uploads/2025/01/cropped-cropped-Untitled-design-1-300x75.webp" alt="Nomadikas" class="h-8 md:h-9" /></a>
-    <a href="index.html" class="hidden md:flex items-center gap-2 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a] hover:text-black transition-colors">
-      <span>←</span> All countries
-    </a>
+    <a href="index.html" class="hidden md:flex items-center gap-2 font-josefin uppercase tracking-[0.28em] text-[0.6rem] text-[#5a5a5a] hover:text-black transition-colors"><span>←</span> All countries</a>
     <div class="font-josefin uppercase tracking-[0.32em] text-[0.6rem] text-[#8c8c79]">Portugal</div>
   </div>
 </header>
 
-<!-- Country hero with Ken Burns -->
 <section class="relative h-[62vh] min-h-[480px] overflow-hidden">
   <div class="hero-bg absolute inset-0 bg-cover bg-center" style="background-image: url('https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-at-Sunset-rg6j4ri0cuorvl26uqs7x5k6j875i2eainr3mv7e9s.webp');"></div>
   <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/60"></div>
   <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
     <p class="font-josefin uppercase tracking-[0.42em] text-[0.62rem] mb-6 opacity-85">Portugal · Two homes</p>
-    <h1 class="font-heading italic font-light leading-[1.05]" style="font-size: clamp(2.8rem, 5.5vw, 4.8rem);">
-      The finest of coast,<br />
-      and the <em class="text-[#d4d2c5]">wild</em> behind it.
-    </h1>
+    <h1 class="font-heading italic font-light leading-[1.05]" style="font-size: clamp(2.8rem, 5.5vw, 4.8rem);">The finest of coast,<br />and the <em class="text-[#d4d2c5]">wild</em> behind it.</h1>
   </div>
 </section>
 
@@ -84,7 +99,6 @@
 <section class="px-6 mb-20 max-w-6xl mx-auto">
   <article id="venue-casa-noor" class="grid md:grid-cols-2 bg-[#FBF9F4] border border-black/8 overflow-hidden">
 
-    <!-- Photo column with caption underneath -->
     <div class="flex flex-col order-1">
       <button onclick="openSlider('casaNoor')" class="relative block w-full overflow-hidden bg-black cursor-zoom-in group flex-1">
         <div class="aspect-[4/5] md:aspect-auto md:min-h-[580px] md:h-full bg-cover bg-center photo-hover" style="background-image: url('https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/VieMRDlVTupVFXTOg0Gq_d1bddff3-fffd-4296-d509-cd5f87f8423d.jpg?width=2000&q=80');"></div>
@@ -96,7 +110,6 @@
       <p class="font-heading italic text-[#5a5a5a] text-[0.92rem] leading-snug px-6 py-4 bg-[#FBF9F4]">The 18-metre heated pool framed by the architect's low pavilions — the gardens hold a tennis court and a gym, hidden in the pines.</p>
     </div>
 
-    <!-- Info column -->
     <div class="flex flex-col justify-between p-8 md:p-12 lg:p-14 order-2">
       <div>
         <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-6">Comporta · Alentejo · Portugal</p>
@@ -112,7 +125,6 @@
           <div><p class="font-heading italic leading-none" style="font-size: 1.8rem;">5 min</p><p class="font-josefin uppercase tracking-[0.22em] text-[0.55rem] text-[#8c8c79] mt-2">to beach</p></div>
         </div>
 
-        <!-- Highlight icons row -->
         <div class="grid grid-cols-3 gap-x-4 gap-y-3 mb-7 pb-7 border-b border-black/10">
           <div class="flex items-center gap-2 text-[0.78rem] text-[#2D2D2D]"><i data-lucide="circle-dot" class="w-3.5 h-3.5 text-[#8c8c79]"></i><span>Tennis court</span></div>
           <div class="flex items-center gap-2 text-[0.78rem] text-[#2D2D2D]"><i data-lucide="droplet" class="w-3.5 h-3.5 text-[#8c8c79]"></i><span>Heated pool</span></div>
@@ -209,133 +221,70 @@
   </article>
 </section>
 
-<!-- ═══════════════ EXPERIENCES — Swiper slider (3 desktop / 1 mobile, infinite, hover-reveal) ═══════════════ -->
-<section class="py-24 md:py-32 bg-[#1a1a1a] text-white/85">
+<!-- ═══════════════ EXPERIENCES — Swiper, side arrows, hover slide-up left-aligned ═══════════════ -->
+<section class="py-24 md:py-32 bg-[#1a1a1a] text-white/85 overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="max-w-3xl mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-      <div>
-        <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Signature experiences</p>
-        <h2 class="font-heading italic font-light leading-[1.1] text-white" style="font-size: clamp(2.4rem, 4.2vw, 3.4rem);">
-          Experiences that<br />define the journey.
-        </h2>
-      </div>
-      <div class="flex gap-3 self-start md:self-end">
-        <button class="exp-prev w-12 h-12 border border-white/30 text-white hover:border-white hover:bg-white/10 transition-colors flex items-center justify-center text-2xl leading-none">‹</button>
-        <button class="exp-next w-12 h-12 border border-white/30 text-white hover:border-white hover:bg-white/10 transition-colors flex items-center justify-center text-2xl leading-none">›</button>
-      </div>
+    <div class="max-w-3xl mb-14">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Signature experiences</p>
+      <h2 class="font-heading italic font-light leading-[1.1] text-white" style="font-size: clamp(2.4rem, 4.2vw, 3.4rem);">Experiences that<br />define the journey.</h2>
     </div>
 
-    <div class="swiper exp-swiper">
-      <div class="swiper-wrapper">
+    <div class="relative">
+      <button class="exp-prev absolute -left-2 md:-left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 border border-white/30 bg-black/40 backdrop-blur hover:bg-white/15 hover:border-white/60 text-white flex items-center justify-center text-2xl leading-none transition-all">‹</button>
+      <button class="exp-next absolute -right-2 md:-right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 border border-white/30 bg-black/40 backdrop-blur hover:bg-white/15 hover:border-white/60 text-white flex items-center justify-center text-2xl leading-none transition-all">›</button>
 
-        <!-- 1. Horse riding on Atlantic -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+      <div class="swiper exp-swiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Comporta beach</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Horse riding on<br>the Atlantic</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Comporta beach</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Horse riding on<br>the Atlantic</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A stable in Carvalhal arranges horses for all levels — empty beach, surf one side, dunes the other.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Comporta beach</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Horse riding on<br>the Atlantic</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Comporta beach</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Horse riding on<br>the Atlantic</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A stable in Carvalhal arranges horses for all levels — empty beach, surf on one side, dunes on the other.</p></div>
+          </div></div>
 
-        <!-- 2. Sunset oysters by Sado -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1567521464027-f127ff144326?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Carrasqueira</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Sunset oysters<br>by the Sado</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Carrasqueira</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Sunset oysters<br>by the Sado</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A stilt-village fishing port at golden hour. Oysters opened in front of you, vinho verde, dolphins in the estuary.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Carrasqueira</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Sunset oysters<br>by the Sado</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Carrasqueira</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Sunset oysters<br>by the Sado</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A stilt-village fishing port at golden hour. Oysters opened in front of you, vinho verde, dolphins in the estuary.</p></div>
+          </div></div>
 
-        <!-- 3. Boutique winery lunch -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Alentejo</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Boutique<br>winery lunch</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Alentejo</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Boutique<br>winery lunch</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">Single-vineyard pours from a small Alentejo winery — the family's table, no other guests, the vineyard at your feet.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Alentejo</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Boutique<br>winery lunch</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Alentejo</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Boutique<br>winery lunch</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">Single-vineyard pours from a small Alentejo winery — the family's table, no other guests, the vineyard at your feet.</p></div>
+          </div></div>
 
-        <!-- 4. Pottery São Domingos -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">São Domingos</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A morning<br>at the wheel</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">São Domingos</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A morning<br>at the wheel</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A private session with a fourth-generation ceramicist — throw one piece, take it home glazed and fired.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">São Domingos</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A morning<br>at the wheel</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">São Domingos</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A morning<br>at the wheel</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A private session with a fourth-generation ceramicist — throw one piece, take it home glazed and fired.</p></div>
+          </div></div>
 
-        <!-- 5. Stargazing lake terrace -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Lake terrace · Fonte</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A sky with<br>no light pollution</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Lake terrace · Fonte</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A sky with<br>no light pollution</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">The Alentejo is the world's first Starlight Tourism Destination — astronomy guide on the lake at midnight if you'd like one.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Lake terrace · Fonte</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A sky with<br>no light pollution</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Lake terrace · Fonte</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A sky with<br>no light pollution</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">The Alentejo is the world's first Starlight Tourism Destination — astronomy guide on the lake at midnight if you'd like one.</p></div>
+          </div></div>
 
-        <!-- 6. Boat day Sado dolphins -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
             <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=900&q=80');"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
             <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Sado Estuary</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A boat day<br>with the dolphins</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Sado Estuary</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A boat day<br>with the dolphins</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A private boat from the salt-flats out to the resident bottlenose pod that lives in the Sado mouth.</p>
-            </div>
-          </div>
-        </div>
+            <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Sado Estuary</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A boat day<br>with the dolphins</h3></div>
+            <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Sado Estuary</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A boat day<br>with the dolphins</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A private boat from the salt-flats out to the resident bottlenose pod that lives in the Sado mouth.</p></div>
+          </div></div>
 
+        </div>
       </div>
     </div>
   </div>
@@ -358,15 +307,31 @@
   <p id="copy-status" class="mt-2 font-josefin uppercase tracking-[0.32em] text-[0.5rem] text-[#8c8c79] opacity-0 transition-opacity">Copied to clipboard</p>
 </div>
 
-<!-- Modals -->
-<div id="modal-photos" class="fixed inset-0 z-[100] hidden bg-black/95 items-center justify-center">
-  <button onclick="closeModals()" class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl z-10 leading-none">×</button>
-  <div class="relative w-full max-w-6xl flex flex-col items-center justify-center px-12 md:px-16">
-    <img id="modal-photo-img" class="max-w-full max-h-[80vh] object-contain" src="" alt="" />
-    <p id="modal-photo-counter" class="mt-4 text-white/60 font-josefin uppercase tracking-[0.32em] text-[0.62rem]">1 / 10</p>
-    <button onclick="prevPhoto()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">‹</button>
-    <button onclick="nextPhoto()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">›</button>
-  </div>
+<!-- ═══════════════ PHOTO MODAL — Indonesia-style ═══════════════ -->
+<div id="modal-photos" class="fixed inset-0 z-[100] hidden items-center justify-center">
+  <div class="modal-fade-top"></div>
+  <div class="modal-fade-bot"></div>
+
+  <!-- Counter top-left -->
+  <div class="absolute top-6 left-6 md:top-8 md:left-8 z-[5] bg-black/30 backdrop-blur text-[#faf8f3] px-4 py-2 font-josefin uppercase tracking-[0.25em] text-[0.7rem]" id="modal-photo-counter">1 / 10</div>
+
+  <!-- Close top-right -->
+  <button onclick="closeModals()" class="modal-photo-arrow absolute top-6 right-6 md:top-8 md:right-8 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center">
+    <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+
+  <!-- Prev / Next -->
+  <button onclick="prevPhoto()" class="modal-photo-arrow absolute left-3 md:left-8 top-1/2 -translate-y-1/2 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center text-2xl leading-none">‹</button>
+  <button onclick="nextPhoto()" class="modal-photo-arrow absolute right-3 md:right-8 top-1/2 -translate-y-1/2 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center text-2xl leading-none">›</button>
+
+  <!-- Photo (object-contain) -->
+  <img id="modal-photo-img" class="max-w-[90%] max-h-[80vh] object-contain relative z-[1]" src="" alt="" />
+
+  <!-- Caption inside photo at bottom -->
+  <div class="modal-photo-caption absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-[5] max-w-[78%] text-center" id="modal-photo-caption-wrap"><span id="modal-photo-caption"></span></div>
+
+  <!-- Pagination dots at very bottom -->
+  <div class="absolute bottom-7 left-1/2 -translate-x-1/2 z-[5] flex gap-2.5" id="modal-photo-dots"></div>
 </div>
 
 <div id="modal-info" class="fixed inset-0 z-[100] hidden bg-black/85 items-start justify-center overflow-y-auto py-12 px-4">
@@ -394,22 +359,23 @@ const ALL_VENUES = {
   esBec:      { name: "Es Bec d'Aguila",            country: "Spain",    page: "spain.html"    }
 };
 
+// Photos are now {url, caption} objects
 const VENUES = {
   casaNoor: {
     name: "Casa Noor",
     location: "Comporta · Alentejo · Portugal",
     hero: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/VieMRDlVTupVFXTOg0Gq_d1bddff3-fffd-4296-d509-cd5f87f8423d.jpg?width=2000&q=80",
     photos: [
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/VieMRDlVTupVFXTOg0Gq_d1bddff3-fffd-4296-d509-cd5f87f8423d.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__collectionist__/production/uploads/photos/house-2789/2019-08-20-c99376ed79dbed118ffc155288b8e5ab.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/b8Etv7riRFentXwQI0Ed_5a81c55f-dde5-4161-f66e-663e32b6d450.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/gbJDopoR8KpNQuPNRZEW_9bd010fa-9330-4569-df54-50201f4c2ff6.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/bO6jFmuETtCsEJ1PEnHp_82a9bf17-421a-4a1c-af8b-1a171ffd865a.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/U23PYOS4GwXcLb4xMGWQ_277e9f3c-2ee8-4614-86db-6880a256311a.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/pXDHU5DJRvGO6TIP4s2n_70c9f82a-afe8-46e5-cab4-911cea88c25d.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/9JQ4BjrHSdOOLgl5q3xC_1d7eab8f-31eb-48c8-ed53-335d20cac1e4.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__collectionist__/production/uploads/photos/house-2789/2018-10-09-1a8281b0cac686119ac64eb3a29236ac.jpg?width=2000&q=80",
-      "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/XoK4NillRm29O9Apqjvb_4d46b530-0275-41ce-dcc7-451cac8762cd.jpg?width=2000&q=80"
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/VieMRDlVTupVFXTOg0Gq_d1bddff3-fffd-4296-d509-cd5f87f8423d.jpg?width=2000&q=80", caption: "The 18-metre heated pool, framed by the architect's low pavilions" },
+      { url: "https://cdn.lecollectionist.com/__collectionist__/production/uploads/photos/house-2789/2019-08-20-c99376ed79dbed118ffc155288b8e5ab.jpg?width=2000&q=80", caption: "A reading nook in the pavilion, at golden hour" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/b8Etv7riRFentXwQI0Ed_5a81c55f-dde5-4161-f66e-663e32b6d450.jpg?width=2000&q=80", caption: "The dining table for twelve, under the pergola at six" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/gbJDopoR8KpNQuPNRZEW_9bd010fa-9330-4569-df54-50201f4c2ff6.jpg?width=2000&q=80", caption: "Pool-house twin, with private terrace" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/bO6jFmuETtCsEJ1PEnHp_82a9bf17-421a-4a1c-af8b-1a171ffd865a.jpg?width=2000&q=80", caption: "The master bedroom — pine, linen, low light" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/U23PYOS4GwXcLb4xMGWQ_277e9f3c-2ee8-4614-86db-6880a256311a.jpg?width=2000&q=80", caption: "The pétanque pitch among the rosemary" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/pXDHU5DJRvGO6TIP4s2n_70c9f82a-afe8-46e5-cab4-911cea88c25d.jpg?width=2000&q=80", caption: "The kitchen — built to professional standard" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/9JQ4BjrHSdOOLgl5q3xC_1d7eab8f-31eb-48c8-ed53-335d20cac1e4.jpg?width=2000&q=80", caption: "A guest bedroom — soft linen, dim lamps" },
+      { url: "https://cdn.lecollectionist.com/__collectionist__/production/uploads/photos/house-2789/2018-10-09-1a8281b0cac686119ac64eb3a29236ac.jpg?width=2000&q=80", caption: "The pavilion at dusk — the cicadas begin" },
+      { url: "https://cdn.lecollectionist.com/__lecollectionist__/production/houses/2789/photos/XoK4NillRm29O9Apqjvb_4d46b530-0275-41ce-dcc7-451cac8762cd.jpg?width=2000&q=80", caption: "The pool from the courtyard, edged in deep planting" }
     ],
     description: "A 700-square-metre house drawn by a celebrated Portuguese architect, set inside a natural reserve where pines meet the dunes. Seven en-suite bedrooms each with private terrace. The pool is 18 metres, heatable; the gardens hold a tennis court, gym with massage table, pétanque and a football pitch — facilities that elsewhere would feel showy, here vanish into the landscape. The beach is five minutes by car. A chef can prepare half-board; the concierge does the rest — restaurant tables that are otherwise impossible, an aqua-bike tutor, a car at the door before you've finished coffee.",
     faqs: [
@@ -426,17 +392,17 @@ const VENUES = {
     location: "Melides · Alentejo · Portugal",
     hero: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-das-Perdizes-by-Eddie-Roschi-in-Alentejo-Portugal-rjfhxmltmsexzps0cv4ct8dhu5zdldogpvi7fcvvuo.jpg",
     photos: [
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-das-Perdizes-by-Eddie-Roschi-in-Alentejo-Portugal-rjfhxmltmsexzps0cv4ct8dhu5zdldogpvi7fcvvuo.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-4-rjfhz2ay2odpq9owyzgu4dbuicwkcqdp8zdwtkr8cg.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-19-rjfhygonphk4b8kbh84f10s8uhv4fozvi0dqs7nabk.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-1-rjfhz54gn6hkp3ktiioptum8aiinztow9dcd9en1ts.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-43-rjfhya3sdnb41ytvjna11kg0osrjxt9r53tcf9x1j4.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-54-rjfhy7a9t57934xz0425c35mwf5gapyk4puvzg181s.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-71-rjfhxu4j5gp8klh34yddd6h6l8ybayibewq39kkqgw.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-2-Kitchen-rjfhz38s9if01vnjthvgov3b3qrxkfhfl41eaupu68.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-29-rjfhycxay5ez0sps36hwr1qegydnkwky5hrsv3sv0g.jpg",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-at-Sunset-rg6j4ri0cuorvl26uqs7x5k6j875i2eainr3mv7e9s.webp",
-      "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-at-night-rjfhxnjntmg8bbqn7dizdq4yfjuqt2s7205owmuhog.jpg"
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-das-Perdizes-by-Eddie-Roschi-in-Alentejo-Portugal-rjfhxmltmsexzps0cv4ct8dhu5zdldogpvi7fcvvuo.jpg", caption: "The estate at golden hour — the cork oaks behind" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-4-rjfhz2ay2odpq9owyzgu4dbuicwkcqdp8zdwtkr8cg.jpg", caption: "The lake through the olives — a five-minute walk" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-19-rjfhygonphk4b8kbh84f10s8uhv4fozvi0dqs7nabk.jpg", caption: "The main house in local clay, stone and wood" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-1-rjfhz54gn6hkp3ktiioptum8aiinztow9dcd9en1ts.jpg", caption: "The yoga shala in the olive grove" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-43-rjfhya3sdnb41ytvjna11kg0osrjxt9r53tcf9x1j4.jpg", caption: "Morning light through the master suite" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-54-rjfhy7a9t57934xz0425c35mwf5gapyk4puvzg181s.jpg", caption: "A guest bedroom — the garden just outside" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-71-rjfhxu4j5gp8klh34yddd6h6l8ybayibewq39kkqgw.jpg", caption: "The pool at the heart of the courtyard" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-2-Kitchen-rjfhz38s9if01vnjthvgov3b3qrxkfhfl41eaupu68.jpg", caption: "The kitchen — Portuguese tile, country light" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Flores-29-rjfhycxay5ez0sps36hwr1qegydnkwky5hrsv3sv0g.jpg", caption: "The dining terrace, set for the long table" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-at-Sunset-rg6j4ri0cuorvl26uqs7x5k6j875i2eainr3mv7e9s.webp", caption: "The estate at sunset — the sky over the olives" },
+      { url: "https://nomadikas.com/wp-content/uploads/elementor/thumbs/Fonte-at-night-rjfhxnjntmg8bbqn7dizdq4yfjuqt2s7205owmuhog.jpg", caption: "The estate after dark — windows on the land" }
     ],
     description: "180 hectares of Alentejo — no neighbouring houses, no road noise, only land, trees and sky. A 500m² main house built in local clay, stone and wood. A lake within walking distance, a yoga shala among the olive trees, an outdoor shower beside the pool, a glam outdoor sleeping setup under the cork canopy. Mornings are slow: coffee on the terrace as the light changes, sourdough from a baker in Melides, a horse waiting if you've asked for one.",
     faqs: [
@@ -450,9 +416,16 @@ const VENUES = {
   }
 };
 
-// Modal logic
+// Photo modal logic — Indonesia style
 let currentVenue = null, currentPhotoIndex = 0;
-function openSlider(key) { currentVenue = VENUES[key]; currentPhotoIndex = 0; showPhoto(); const m = document.getElementById('modal-photos'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.classList.add('modal-open'); }
+function openSlider(key) {
+  currentVenue = VENUES[key]; currentPhotoIndex = 0;
+  renderDots();
+  showPhoto();
+  const m = document.getElementById('modal-photos');
+  m.classList.remove('hidden'); m.classList.add('flex');
+  document.body.classList.add('modal-open');
+}
 function openInfo(key) {
   const v = VENUES[key]; currentVenue = v;
   document.getElementById('modal-info-photo').style.backgroundImage = `url('${v.hero}')`;
@@ -463,9 +436,22 @@ function openInfo(key) {
   const m = document.getElementById('modal-info'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.classList.add('modal-open');
 }
 function closeModals() { ['modal-photos','modal-info'].forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.classList.remove('flex'); }); document.body.classList.remove('modal-open'); }
-function showPhoto() { document.getElementById('modal-photo-img').src = currentVenue.photos[currentPhotoIndex]; document.getElementById('modal-photo-counter').textContent = `${currentPhotoIndex + 1} / ${currentVenue.photos.length}`; }
+
+function renderDots() {
+  const dotsEl = document.getElementById('modal-photo-dots');
+  dotsEl.innerHTML = currentVenue.photos.map((_, i) => `<button class="modal-dot" data-i="${i}" onclick="goPhoto(${i})"></button>`).join('');
+}
+function showPhoto() {
+  const p = currentVenue.photos[currentPhotoIndex];
+  document.getElementById('modal-photo-img').src = p.url;
+  document.getElementById('modal-photo-caption').textContent = p.caption || '';
+  document.getElementById('modal-photo-counter').textContent = `${currentPhotoIndex + 1} / ${currentVenue.photos.length}`;
+  document.querySelectorAll('#modal-photo-dots .modal-dot').forEach((d, i) => d.classList.toggle('active', i === currentPhotoIndex));
+}
+function goPhoto(i) { currentPhotoIndex = i; showPhoto(); }
 function prevPhoto() { currentPhotoIndex = (currentPhotoIndex - 1 + currentVenue.photos.length) % currentVenue.photos.length; showPhoto(); }
 function nextPhoto() { currentPhotoIndex = (currentPhotoIndex + 1) % currentVenue.photos.length; showPhoto(); }
+
 document.addEventListener('keydown', e => {
   const open = !document.getElementById('modal-photos').classList.contains('hidden') || !document.getElementById('modal-info').classList.contains('hidden');
   if (!open) return;
@@ -494,19 +480,15 @@ function updateFavUI() {
 }
 updateFavUI();
 
-// Swiper experience slider — 3 desktop, 1 mobile, infinite
+// Swiper — 3 desktop / 1 mobile / infinite
 new Swiper('.exp-swiper', {
   slidesPerView: 1,
   spaceBetween: 18,
   loop: true,
   navigation: { nextEl: '.exp-next', prevEl: '.exp-prev' },
-  breakpoints: {
-    640:  { slidesPerView: 2, spaceBetween: 20 },
-    1024: { slidesPerView: 3, spaceBetween: 24 }
-  }
+  breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 24 } }
 });
 
-// Lucide icons
 lucide.createIcons();
 </script>
 </body>

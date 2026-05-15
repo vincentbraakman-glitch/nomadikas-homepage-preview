@@ -15,23 +15,32 @@
   .font-josefin { font-family: 'Josefin Sans', sans-serif; }
   .photo-hover { transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .group:hover .photo-hover { transform: scale(1.03); }
-  @keyframes ken-burns { 0%   { transform: scale(1.05) translate(0, 0); } 50%  { transform: scale(1.12) translate(-1.5%, 1%); } 100% { transform: scale(1.05) translate(0, 0); } }
+  @keyframes ken-burns { 0%{transform:scale(1.05) translate(0,0);} 50%{transform:scale(1.12) translate(-1.5%,1%);} 100%{transform:scale(1.05) translate(0,0);} }
   .hero-bg { animation: ken-burns 36s ease-in-out infinite; }
   body.modal-open { overflow: hidden; }
   .fav-btn.fav-active svg { fill: #fff; stroke: #fff; }
   .fav-btn.fav-active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
   .price-strip { border-top: 1px solid rgba(0,0,0,0.10); }
-  @keyframes pulse-soft { 0%, 100% { transform: translateY(0); opacity: 0.85; } 50% { transform: translateY(-3px); opacity: 1; } }
+  @keyframes pulse-soft { 0%,100%{transform:translateY(0);opacity:0.85;} 50%{transform:translateY(-3px);opacity:1;} }
   .pulse-soft { animation: pulse-soft 2.2s ease-in-out infinite; }
   .exp-photo { transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
   .exp-card:hover .exp-photo { transform: scale(1.06); }
-  .exp-default { opacity: 1; transition: opacity 0.5s ease; }
-  .exp-hover { opacity: 0; transition: opacity 0.5s ease; }
+  .exp-default { transition: opacity 0.5s ease; }
   .exp-card:hover .exp-default { opacity: 0; }
-  .exp-card:hover .exp-hover { opacity: 1; }
+  .exp-hover { opacity: 0; transform: translateY(32px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+  .exp-card:hover .exp-hover { opacity: 1; transform: translateY(0); }
   .exp-dark { opacity: 0; transition: opacity 0.5s ease; }
   .exp-card:hover .exp-dark { opacity: 1; }
-  .exp-swiper { overflow: hidden; }
+  .exp-swiper { overflow: visible; }
+  .exp-swiper .swiper-slide { height: auto; }
+  #modal-photos { background: #141414; }
+  .modal-fade-top { position: absolute; left: 0; right: 0; top: 0; height: 140px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0) 100%); }
+  .modal-fade-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; z-index: 2; pointer-events: none; background: linear-gradient(0deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0) 100%); }
+  .modal-dot { width: 2rem; height: 2px; background: rgba(255,255,255,0.3); cursor: pointer; border: none; padding: 0; transition: background 0.3s ease; }
+  .modal-dot.active { background: #faf8f3; }
+  .modal-photo-arrow { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(6px); transition: all 0.3s ease; }
+  .modal-photo-arrow:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.5); }
+  .modal-photo-caption { background: rgba(10,10,10,0.55); backdrop-filter: blur(6px); color: rgba(250,248,243,0.95); font-family: 'Amiri', serif; font-style: italic; font-size: 0.95rem; letter-spacing: 0.01em; padding: 0.55rem 1.25rem; transition: opacity 0.4s ease; }
 </style>
 </head>
 <body>
@@ -49,10 +58,7 @@
   <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/60"></div>
   <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 text-white">
     <p class="font-josefin uppercase tracking-[0.42em] text-[0.62rem] mb-6 opacity-85">Greece · Zakynthos · One home</p>
-    <h1 class="font-heading italic font-light leading-[1.05]" style="font-size: clamp(2.8rem, 5.5vw, 4.8rem);">
-      The Ionian.<br />
-      A private path <em class="text-[#d4d2c5]">to the sea.</em>
-    </h1>
+    <h1 class="font-heading italic font-light leading-[1.05]" style="font-size: clamp(2.8rem, 5.5vw, 4.8rem);">The Ionian.<br />A private path <em class="text-[#d4d2c5]">to the sea.</em></h1>
   </div>
 </section>
 
@@ -62,7 +68,6 @@
   </p>
 </section>
 
-<!-- ═══════════════ VENUE 01 — Zakynthos ═══════════════ -->
 <section class="px-6 mb-24 max-w-6xl mx-auto">
   <article id="venue-zakynthos" class="grid md:grid-cols-2 bg-[#FBF9F4] border border-black/8 overflow-hidden">
 
@@ -82,9 +87,7 @@
         <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-6">Zakynthos · Ionian · Greece</p>
         <h2 class="font-heading italic leading-[1] mb-4" style="font-size: clamp(2.4rem, 4.2vw, 3.4rem);">Beachfront Villa Zakynthos</h2>
         <p class="font-heading italic text-[1.05rem] text-[#5a5a5a] mb-7 leading-snug">a bohemian eight-bedroom on a private stretch of sea</p>
-        <p class="text-[0.92rem] leading-[1.7] text-[#2D2D2D] font-light mb-8 max-w-[44ch]">
-          An eight-bedroom house on the quiet western coast, opening directly onto the sea. Two infinity pools draw the line between you and the Ionian. Olive and cypress at the door, a private stretch of beach below, a chef working in an outdoor kitchen under vines. Sea turtles snorkel past at breakfast.
-        </p>
+        <p class="text-[0.92rem] leading-[1.7] text-[#2D2D2D] font-light mb-8 max-w-[44ch]">An eight-bedroom house on the quiet western coast, opening directly onto the sea. Two infinity pools draw the line between you and the Ionian. Olive and cypress at the door, a private stretch of beach below, a chef working in an outdoor kitchen under vines. Sea turtles snorkel past at breakfast.</p>
 
         <div class="grid grid-cols-3 gap-x-8 gap-y-4 mb-8">
           <div><p class="font-heading italic leading-none" style="font-size: 1.8rem;">16</p><p class="font-josefin uppercase tracking-[0.22em] text-[0.55rem] text-[#8c8c79] mt-2">guests</p></div>
@@ -123,132 +126,68 @@
   </article>
 </section>
 
-<!-- EXPERIENCES — Swiper -->
-<section class="py-24 md:py-32 bg-[#1a1a1a] text-white/85">
+<section class="py-24 md:py-32 bg-[#1a1a1a] text-white/85 overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="max-w-3xl mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-      <div>
-        <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Signature experiences</p>
-        <h2 class="font-heading italic font-light leading-[1.1] text-white" style="font-size: clamp(2.4rem, 4.2vw, 3.4rem);">Experiences that<br />define the journey.</h2>
-      </div>
-      <div class="flex gap-3 self-start md:self-end">
-        <button class="exp-prev w-12 h-12 border border-white/30 text-white hover:border-white hover:bg-white/10 transition-colors flex items-center justify-center text-2xl leading-none">‹</button>
-        <button class="exp-next w-12 h-12 border border-white/30 text-white hover:border-white hover:bg-white/10 transition-colors flex items-center justify-center text-2xl leading-none">›</button>
-      </div>
+    <div class="max-w-3xl mb-14">
+      <p class="font-josefin uppercase tracking-[0.32em] text-[0.62rem] text-[#8c8c79] mb-5">Signature experiences</p>
+      <h2 class="font-heading italic font-light leading-[1.1] text-white" style="font-size: clamp(2.4rem, 4.2vw, 3.4rem);">Experiences that<br />define the journey.</h2>
     </div>
 
-    <div class="swiper exp-swiper">
-      <div class="swiper-wrapper">
+    <div class="relative">
+      <button class="exp-prev absolute -left-2 md:-left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 border border-white/30 bg-black/40 backdrop-blur hover:bg-white/15 hover:border-white/60 text-white flex items-center justify-center text-2xl leading-none transition-all">‹</button>
+      <button class="exp-next absolute -right-2 md:-right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 border border-white/30 bg-black/40 backdrop-blur hover:bg-white/15 hover:border-white/60 text-white flex items-center justify-center text-2xl leading-none transition-all">›</button>
 
-        <!-- 1. Bostani Farm-to-Table -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Bochali · Zakynthos</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Bostani<br>farm-to-table</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Bochali · Zakynthos</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Bostani<br>farm-to-table</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A working organic farm above town — the chef cooks with what was picked that morning. Long table on the terrace, Zakynthos olive oil, your group only.</p>
-            </div>
-          </div>
-        </div>
+      <div class="swiper exp-swiper"><div class="swiper-wrapper">
 
-        <!-- 2. Navagio Shipwreck -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542640244-7e672d6cef4e?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Navagio · Western coast</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A private boat to<br>the Shipwreck</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Navagio · Western coast</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A private boat to<br>the Shipwreck</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">The shipwreck cove on every postcard — but at first light, before the day boats arrive. Just your party in the bay.</p>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Bochali · Zakynthos</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Bostani<br>farm-to-table</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Bochali · Zakynthos</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Bostani<br>farm-to-table</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A working organic farm above town — the chef cooks with what was picked that morning. Long table on the terrace, Zakynthos olive oil, your group only.</p></div>
+        </div></div>
 
-        <!-- 3. Sea turtles -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551244072-5d12893278ab?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Laganas Bay</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Snorkel with<br>the loggerheads</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Laganas Bay</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Snorkel with<br>the loggerheads</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">Zakynthos protects the last Mediterranean nesting beach for loggerhead turtles. A marine biologist guides you through the bay before tourists arrive.</p>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542640244-7e672d6cef4e?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Navagio · Western coast</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A private boat to<br>the Shipwreck</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Navagio · Western coast</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A private boat to<br>the Shipwreck</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">The shipwreck cove on every postcard — but at first light, before the day boats arrive. Just your party in the bay.</p></div>
+        </div></div>
 
-        <!-- 4. Sunset sail Marathonisi -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1530648672449-81f6c723e2f1?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Marathonisi · Turtle Island</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A sunset sail<br>to the south</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Marathonisi · Turtle Island</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A sunset sail<br>to the south</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A private catamaran out to Turtle Island for sundown — chilled Assyrtiko, dinner on the deck, the lighthouse winking.</p>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551244072-5d12893278ab?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Laganas Bay</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">Snorkel with<br>the loggerheads</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Laganas Bay</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">Snorkel with<br>the loggerheads</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">Zakynthos protects the last Mediterranean nesting beach for loggerhead turtles. A marine biologist guides you through the bay before tourists arrive.</p></div>
+        </div></div>
 
-        <!-- 5. Cliffside private lunch -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1493770348161-369560ae357d?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">A headland near you</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A long table<br>above the sea</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">A headland near you</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A long table<br>above the sea</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">The villa's chef sets a single long table on a private headland. Grilled fish, taramasalata, ouzo as the sun drops.</p>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1530648672449-81f6c723e2f1?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Marathonisi · Turtle Island</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A sunset sail<br>to the south</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Marathonisi · Turtle Island</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A sunset sail<br>to the south</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A private catamaran out to Turtle Island for sundown — chilled Assyrtiko, dinner on the deck, the lighthouse winking.</p></div>
+        </div></div>
 
-        <!-- 6. Cellar tasting Skinaria -->
-        <div class="swiper-slide">
-          <div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
-            <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
-            <div class="exp-dark absolute inset-0 bg-black/75"></div>
-            <div class="exp-default absolute inset-0 flex flex-col justify-end p-6">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Skinaria · The hills</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A cellar lunch<br>with the vigneron</h3>
-            </div>
-            <div class="exp-hover absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-              <p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Skinaria · The hills</p>
-              <h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A cellar lunch<br>with the vigneron</h3>
-              <p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[28ch]">A small-batch winery in the hills — verdea and robola from old vines, lunch on the terrace with the family.</p>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1493770348161-369560ae357d?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">A headland near you</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A long table<br>above the sea</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">A headland near you</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A long table<br>above the sea</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">The villa's chef sets a single long table on a private headland. Grilled fish, taramasalata, ouzo as the sun drops.</p></div>
+        </div></div>
 
-      </div>
+        <div class="swiper-slide"><div class="exp-card group relative aspect-[4/5] overflow-hidden cursor-pointer">
+          <div class="exp-photo absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+          <div class="exp-dark absolute inset-0 bg-black/75"></div>
+          <div class="exp-default absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-2">Skinaria · The hills</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.15]">A cellar lunch<br>with the vigneron</h3></div>
+          <div class="exp-hover absolute inset-0 flex flex-col justify-end items-start p-6 text-left"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#d4d2c5] mb-3">Skinaria · The hills</p><h3 class="font-heading italic text-white text-[1.5rem] leading-[1.2] mb-4">A cellar lunch<br>with the vigneron</h3><p class="text-white/90 text-[0.88rem] leading-relaxed max-w-[34ch]">A small-batch winery in the hills — verdea and robola from old vines, lunch on the terrace with the family.</p></div>
+        </div></div>
+
+      </div></div>
     </div>
   </div>
 </section>
@@ -259,26 +198,23 @@
   <p class="mt-3 font-josefin uppercase tracking-[0.28em] text-[0.55rem] text-[#888]"><a href="index.html" class="border-b border-[#8c8c79] hover:text-black hover:border-black">← Look at Portugal or Spain</a></p>
 </footer>
 
-<!-- Favourites tray -->
 <div id="fav-tray" class="fixed bottom-6 right-6 z-40 bg-white shadow-2xl border border-black/15 px-6 py-5 max-w-[320px] transition-all duration-500" style="transform: translateY(160%);">
   <div class="flex items-center justify-between mb-3"><p class="font-josefin uppercase tracking-[0.32em] text-[0.55rem] text-[#8c8c79]">Your shortlist · <span id="fav-count">0</span></p><button onclick="clearFavs()" class="text-[#888] hover:text-black text-lg leading-none">×</button></div>
   <ul id="fav-list" class="mb-4 text-[0.85rem] font-light text-[#2D2D2D] space-y-1"></ul>
-  <div class="flex gap-2">
-    <a id="fav-mailto" href="#" class="flex-1 px-4 py-3 bg-black text-white text-center font-josefin uppercase tracking-[0.28em] text-[0.55rem] hover:bg-[#8c8c79] transition-colors">Email to Darina</a>
-    <button onclick="copyFavs()" class="px-3 py-3 border border-black/20 text-[#5a5a5a] hover:border-black hover:text-black transition-colors" title="Copy list"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
-  </div>
+  <div class="flex gap-2"><a id="fav-mailto" href="#" class="flex-1 px-4 py-3 bg-black text-white text-center font-josefin uppercase tracking-[0.28em] text-[0.55rem] hover:bg-[#8c8c79] transition-colors">Email to Darina</a><button onclick="copyFavs()" class="px-3 py-3 border border-black/20 text-[#5a5a5a] hover:border-black hover:text-black transition-colors" title="Copy list"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
   <p id="copy-status" class="mt-2 font-josefin uppercase tracking-[0.32em] text-[0.5rem] text-[#8c8c79] opacity-0 transition-opacity">Copied to clipboard</p>
 </div>
 
-<!-- Modals -->
-<div id="modal-photos" class="fixed inset-0 z-[100] hidden bg-black/95 items-center justify-center">
-  <button onclick="closeModals()" class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl z-10 leading-none">×</button>
-  <div class="relative w-full max-w-6xl flex flex-col items-center justify-center px-12 md:px-16">
-    <img id="modal-photo-img" class="max-w-full max-h-[80vh] object-contain" src="" alt="" />
-    <p id="modal-photo-counter" class="mt-4 text-white/60 font-josefin uppercase tracking-[0.32em] text-[0.62rem]">1 / 10</p>
-    <button onclick="prevPhoto()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">‹</button>
-    <button onclick="nextPhoto()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl leading-none">›</button>
-  </div>
+<div id="modal-photos" class="fixed inset-0 z-[100] hidden items-center justify-center">
+  <div class="modal-fade-top"></div>
+  <div class="modal-fade-bot"></div>
+  <div class="absolute top-6 left-6 md:top-8 md:left-8 z-[5] bg-black/30 backdrop-blur text-[#faf8f3] px-4 py-2 font-josefin uppercase tracking-[0.25em] text-[0.7rem]" id="modal-photo-counter">1 / 11</div>
+  <button onclick="closeModals()" class="modal-photo-arrow absolute top-6 right-6 md:top-8 md:right-8 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center"><svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+  <button onclick="prevPhoto()" class="modal-photo-arrow absolute left-3 md:left-8 top-1/2 -translate-y-1/2 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center text-2xl leading-none">‹</button>
+  <button onclick="nextPhoto()" class="modal-photo-arrow absolute right-3 md:right-8 top-1/2 -translate-y-1/2 z-[5] w-12 h-12 md:w-14 md:h-14 text-[#faf8f3] flex items-center justify-center text-2xl leading-none">›</button>
+  <img id="modal-photo-img" class="max-w-[90%] max-h-[80vh] object-contain relative z-[1]" src="" alt="" />
+  <div class="modal-photo-caption absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-[5] max-w-[78%] text-center"><span id="modal-photo-caption"></span></div>
+  <div class="absolute bottom-7 left-1/2 -translate-x-1/2 z-[5] flex gap-2.5" id="modal-photo-dots"></div>
 </div>
 
 <div id="modal-info" class="fixed inset-0 z-[100] hidden bg-black/85 items-start justify-center overflow-y-auto py-12 px-4">
@@ -312,17 +248,17 @@ const VENUES = {
     location: "Zakynthos · Ionian · Greece",
     hero: "https://nomadikas.com/wp-content/uploads/2024/02/4.jpg",
     photos: [
-      "https://nomadikas.com/wp-content/uploads/2024/02/4.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/5.jpg",
-      "https://nomadikas.com/wp-content/uploads/2024/01/16.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/15.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/10.jpg",
-      "https://nomadikas.com/wp-content/uploads/2024/01/17.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/14.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/13.jpg",
-      "https://nomadikas.com/wp-content/uploads/2023/10/11.jpg",
-      "https://nomadikas.com/wp-content/uploads/2024/02/22.jpg",
-      "https://nomadikas.com/wp-content/uploads/2024/02/25.jpg"
+      { url: "https://nomadikas.com/wp-content/uploads/2024/02/4.jpg", caption: "The villa from the gardens — the Ionian beyond" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/5.jpg", caption: "One of two infinity pools, drawn against the sea" },
+      { url: "https://nomadikas.com/wp-content/uploads/2024/01/16.jpg", caption: "A guest bedroom — pale stone, soft linen" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/15.jpg", caption: "The main living room opening to the bay" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/10.jpg", caption: "The dining terrace under cypress" },
+      { url: "https://nomadikas.com/wp-content/uploads/2024/01/17.jpg", caption: "A bathroom with a window on the water" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/14.jpg", caption: "The outdoor kitchen — under vines" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/13.jpg", caption: "A bedroom with a balcony on the Ionian" },
+      { url: "https://nomadikas.com/wp-content/uploads/2023/10/11.jpg", caption: "The pool at twilight, the sun gone" },
+      { url: "https://nomadikas.com/wp-content/uploads/2024/02/22.jpg", caption: "The villa from the beach below" },
+      { url: "https://nomadikas.com/wp-content/uploads/2024/02/25.jpg", caption: "The terrace at sunset — the table set" }
     ],
     description: "An eight-bedroom house on the quiet western coast, opening directly onto the Ionian. Two infinity pools draw a line between you and the sea. Olive and cypress trees frame the gardens; pale stone, soft linen, en-suite bathrooms throughout. Mornings begin slowly: coffee at the daybed, a swim before breakfast, then a walk down to a private stretch of beach where the only footprints are yours. Two kitchens — one inside, one under vines — so a private chef can work without interrupting the rhythm of the house. The villa is wired discreetly: Bluetooth speakers tucked into the architecture, smart TVs hidden when you don't want them.",
     faqs: [
@@ -337,7 +273,7 @@ const VENUES = {
 };
 
 let currentVenue = null, currentPhotoIndex = 0;
-function openSlider(key) { currentVenue = VENUES[key]; currentPhotoIndex = 0; showPhoto(); const m = document.getElementById('modal-photos'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.classList.add('modal-open'); }
+function openSlider(key) { currentVenue = VENUES[key]; currentPhotoIndex = 0; renderDots(); showPhoto(); const m = document.getElementById('modal-photos'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.classList.add('modal-open'); }
 function openInfo(key) {
   const v = VENUES[key]; currentVenue = v;
   document.getElementById('modal-info-photo').style.backgroundImage = `url('${v.hero}')`;
@@ -348,7 +284,15 @@ function openInfo(key) {
   const m = document.getElementById('modal-info'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.classList.add('modal-open');
 }
 function closeModals() { ['modal-photos','modal-info'].forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.classList.remove('flex'); }); document.body.classList.remove('modal-open'); }
-function showPhoto() { document.getElementById('modal-photo-img').src = currentVenue.photos[currentPhotoIndex]; document.getElementById('modal-photo-counter').textContent = `${currentPhotoIndex + 1} / ${currentVenue.photos.length}`; }
+function renderDots() { document.getElementById('modal-photo-dots').innerHTML = currentVenue.photos.map((_, i) => `<button class="modal-dot" onclick="goPhoto(${i})"></button>`).join(''); }
+function showPhoto() {
+  const p = currentVenue.photos[currentPhotoIndex];
+  document.getElementById('modal-photo-img').src = p.url;
+  document.getElementById('modal-photo-caption').textContent = p.caption || '';
+  document.getElementById('modal-photo-counter').textContent = `${currentPhotoIndex + 1} / ${currentVenue.photos.length}`;
+  document.querySelectorAll('#modal-photo-dots .modal-dot').forEach((d, i) => d.classList.toggle('active', i === currentPhotoIndex));
+}
+function goPhoto(i) { currentPhotoIndex = i; showPhoto(); }
 function prevPhoto() { currentPhotoIndex = (currentPhotoIndex - 1 + currentVenue.photos.length) % currentVenue.photos.length; showPhoto(); }
 function nextPhoto() { currentPhotoIndex = (currentPhotoIndex + 1) % currentVenue.photos.length; showPhoto(); }
 document.addEventListener('keydown', e => {
@@ -385,7 +329,6 @@ new Swiper('.exp-swiper', {
   navigation: { nextEl: '.exp-next', prevEl: '.exp-prev' },
   breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 24 } }
 });
-
 lucide.createIcons();
 </script>
 </body>
